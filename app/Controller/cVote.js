@@ -271,6 +271,9 @@ var listEnrollmentDataFn = function(data){
 	/* comment here for disable line.*/
 	/*$("#listDataEnrollmentArea").html(html);*/
 
+
+
+
 	var table=$('#userDataTable').DataTable();
 	
 
@@ -315,6 +318,8 @@ var listEnrollmentDataFn = function(data){
 		}
 	});
 	
+
+
   
 	
 }
@@ -519,26 +524,8 @@ $(document).ready(function(){
 		$("#btnImageReset").click();
 	});
 
+    
 
-	//if($("#actionEnrollment").val()=="edit"){
-		// $("#setChangePass").prop("checked",false);
-		// $(".changePasswordArea").hide();
-		// $("#setChangePass").click(function(){
-		// 	if ($(this).is(":checked"))
-		// 	{
-		// 	  // it is checked
-		// 	  	$(".changePasswordArea").show();
-		// 	}else{
-		// 		$(".changePasswordArea").hide();
-		// 	}
-		// });
-	//}
-	
-	
-	
-	
-	
-	
-	
 	
 });
+

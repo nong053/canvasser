@@ -1,0 +1,432 @@
+<style>
+    .gadeA{
+        background-color:#ff8c00;
+    }
+    .gadeB{
+        background-color:#FFA333;
+    }
+    .gadeC{
+        background-color:#FFBA66;
+    }
+    .gadeD{
+        background-color:#FFD199;
+    }
+    .redFont{
+        color: red;
+        font-weight: bold;
+    }
+    
+</style>
+<!-- Main content -->
+<section class="content1"> 
+    <!--CONTENT01-->
+    <div class="row">
+     
+    </div>
+    <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title "> 
+              <button id="addEnrollment" class="btn btn-primary pull-right" ><i class='ion ion-person-add'></i> เพิ่มรายชื่อคะแนนเสียง</button>
+            </h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+              <div class="row">
+                <div class="col-sm-6">
+                  
+                </div>
+            <div class="col-sm-6">
+              
+            </div>
+          </div>
+            <div class="row">
+              <div class="col-sm-12">
+         
+                <table id="userDataTable" class="table">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>ชื่อ-นามสกุล</th>
+                          <th>เลขบัตรประชาชน</th>
+                          <th>บ้านเลขที่</th>
+                          <th>หมู่ที่</th>
+                          <th>ตำบล</th>
+                          <th>อำเภอ</th>
+                          <th>เบอร์โทรศัพท์</th>
+                          <th>หัวคะแนน</th>
+                          <th>ตำแหน่ง/ระดับ</th>
+                          <th style="text-align: center;">จัดการ</th>
+                      </tr>
+                  </thead>
+                  <tbody id='listDataEnrollmentArea'>
+
+                    <tr role="row" class="odd gadeA" >
+                      <td class="sorting_1"> 1</td>
+                      <td> Voter1 Test</td>
+                      <td>1234567891234</td>
+                      <td>151/4</td>
+                      <td>7</td>
+                      <td>คุ้มเก่า</td>
+                      <td>เขาวง</td>
+                      <td>0809926565</td>
+                      <td>นายทดสอบ1 ระบบ</td><td>นายก อบต.</td>
+                      <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                        <button id="id-61" class="btn btn-danger del">
+                          <i class="fa fa-trash-o"></i></button>
+                        </td>
+                    </tr>
+
+                    <tr role="row" class="odd gadeA">
+                        <td class="sorting_1"> 2</td>
+                        <td> Voter2 Test</td>
+                        <td>1234567891234</td>
+                        <td>152/4</td>
+                        <td>2</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926566</td>
+                        <td>นายทดสอบ1 ระบบ</td><td>นายก อบต.</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeB">
+                        <td class="sorting_1"> 3</td>
+                        <td> Voter3 Test</td>
+                        <td>1234567891234</td>
+                        <td>153/4</td>
+                        <td>3</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926567</td>
+                        <td>นายทดสอบ3 ระบบ</td><td>รองนายกอบต.</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeB">
+                        <td class="sorting_1"> 4</td>
+                        <td> Voter4 Test</td>
+                        <td>1234567891234</td>
+                        <td>154/4</td>
+                        <td>4</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926568</td>
+                        <td>นายทดสอบ3 ระบบ</td><td>รองนายกอบต.</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeC">
+                        <td class="sorting_1"> 5</td>
+                        <td> Voter5 Test</td>
+                        <td>1234567891234</td>
+                        <td>155/4</td>
+                        <td>5</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926569</td>
+                        <td>นายทดสอบ8 ระบบ</td><td>อดีตผู้ใหญ่บ้าน</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeC">
+                        <td class="sorting_1"> 6</td>
+                        <td> Voter6 Test</td>
+                        <td>1234567891234</td>
+                        <td>156/4</td>
+                        <td>6</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926570</td>
+                        <td>นายทดสอบ8 ระบบ</td><td>อดีตผู้ใหญ่บ้าน</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeD">
+                        <td class="sorting_1"> 7</td>
+                        <td> Voter7 Test</td>
+                        <td>1234567891234</td>
+                        <td>157/4</td>
+                        <td>7</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926571</td>
+                        <td>นายทดสอบ9 ระบบ</td><td>ผู้นำชุมชน</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeD">
+                        <td class="sorting_1"> 8</td>
+                        <td> Voter8 Test</td>
+                        <td>1234567891234</td>
+                        <td>158/4</td>
+                        <td>8</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926572</td>
+                        <td>นายทดสอบ9 ระบบ</td><td>ผู้นำชุมชน</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeD">
+                        <td class="sorting_1"> 9</td>
+                        <td> Voter9 Test</td>
+                        <td>1234567891234</td>
+                        <td>159/4</td>
+                        <td>9</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926573</td>
+                        <td>นายทดสอบ9 ระบบ</td><td>ผู้นำชุมชน</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeD">
+                        <td class="sorting_1"> 10</td>
+                        <td> Voter10 Test</td>
+                        <td>1234567891234</td>
+                        <td>15/41</td>
+                        <td>10</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926574</td>
+                        <td>นายทดสอบ9 ระบบ</td><td>ผู้นำชุมชน</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeD">
+                        <td class="sorting_1"> 11</td>
+                        <td> Voter11 Test</td>
+                        <td>1234567891234</td>
+                        <td>15/42</td>
+                        <td>11</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926575</td>
+                        <td>นายทดสอบ9 ระบบ</td><td>ผู้นำชุมชน</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeD">
+                        <td class="sorting_1"> 12</td>
+                        <td> Voter12 Test</td>
+                        <td>1234567891234</td>
+                        <td>15/43</td>
+                        <td>12</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926576</td>
+                        <td>นายทดสอบ9 ระบบ</td><td>ผู้นำชุมชน</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeD">
+                        <td class="sorting_1"> 13</td>
+                        <td> Voter13 Test</td>
+                        <td>1234567891234</td>
+                        <td>15/44</td>
+                        <td>13</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926577</td>
+                        <td>นายทดสอบ9 ระบบ</td><td>ผู้นำชุมชน</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeD">
+                        <td class="sorting_1"> 14</td>
+                        <td> Voter14 Test</td>
+                        <td>1234567891234</td>
+                        <td>15/45</td>
+                        <td>15</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926578</td>
+                        <td>นายทดสอบ9 ระบบ</td><td>ผู้นำชุมชน</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+
+                      <tr role="row" class="odd gadeD">
+                        <td class="sorting_1"> 15</td>
+                        <td> Voter16 Test</td>
+                        <td>1234567891234</td>
+                        <td>15/46</td>
+                        <td>167</td>
+                        <td>คุ้มเก่า</td>
+                        <td>เขาวง</td>
+                        <td>0809926579</td>
+                        <td>นายทดสอบ9 ระบบ</td><td>ผู้นำชุมชน</td>
+                        <td style="text-align:center;"><button id="edit-61" class="btn btn-warning edit" style="margin-right:3px;"><i class="fa fa-pencil"></i></button>
+                          <button id="id-61" class="btn btn-danger del">
+                            <i class="fa fa-trash-o"></i></button>
+                          </td>
+                      </tr>
+                    
+
+                  </tbody>
+              </table>
+
+
+
+
+
+             
+
+
+          </div>
+        </div>
+
+          </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+
+
+<!-- from user management-->
+<div class="modal fade" id="enrollmentModal">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title">จัดการข้อมูลหัวคะแนน</h4>
+    </div>
+    <div class="modal-body">
+      
+      <!-- Content here.-->
+      <div class="box box-info">
+     
+      <!-- /.box-header -->
+      <!-- form start -->
+     <form  class="form-horizontal "> 
+        <div class="box-body">
+      
+          
+
+         
+
+          <div class="form-group">
+            <label for="fristNameTxt" class="col-sm-4 control-label">ชื่อ <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="fristNameTxt" placeholder="ชื่อ">
+            </div>
+          </div>
+           <div class="form-group">
+            <label for="lastNameTxt" class="col-sm-4 control-label">นามสกุล <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="lastNameTxt" placeholder="นามสกุล">
+            </div>
+          </div>
+          <div  class="form-group">
+            <label for="emailTxt" class="col-sm-4 control-label">บ้านเลขที่ <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="email" class="form-control" id="emailTxt" placeholder="บ้านเลขที่">
+            </div>
+          </div>
+
+          <div  class="form-group">
+            <label for="emailTxt" class="col-sm-4 control-label">หมู่ที่ <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="email" class="form-control" id="emailTxt" placeholder="หมู่ที่">
+            </div>
+          </div>
+
+          <div  class="form-group">
+            <label for="emailTxt" class="col-sm-4 control-label">ตำบล <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="email" class="form-control" id="emailTxt" placeholder="ตำบล">
+            </div>
+          </div>
+          <div  class="form-group">
+            <label for="emailTxt" class="col-sm-4 control-label">อำเภอ <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="email" class="form-control" id="emailTxt" placeholder="อำเภอ">
+            </div>
+          </div>
+          <div  class="form-group">
+            <label for="emailTxt" class="col-sm-4 control-label">เบอร์โทรศัพท์</label>
+
+            <div class="col-sm-8">
+              <input type="email" class="form-control" id="emailTxt" placeholder="เบอร์โทรศัพท์">
+            </div>
+          </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer" >
+           <span class="redFont">*</span> จำเป็นต้องกรอก
+          <button type="button" class="btn btn-default pull-right" data-dismiss="modal" aria-label="Close" style="margin-left: 5px;">ยกเลิก</button>
+          <!-- <button type="reset" class="btn btn-default">ยกเลิก</button> -->
+          <input type="hidden" name="actionEnrollment" id="actionEnrollment" value="add">
+          <input type="hidden" name="idEnrollment" id="idEnrollment" value="">
+          <button id='btnSubmit' type="button" class="btn btn-info pull-right" >บันทึก</button>
+        </div>
+        <!-- /.box-footer -->
+      </form>
+    </div>
+      <!-- Content here.-->
+
+    </div>
+ 
+  </div>
+  <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- from user management-->
+
+<script type="text/javascript" src="./Controller/cVote.js"></script>
+
+
+
+
+
