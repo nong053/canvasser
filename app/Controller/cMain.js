@@ -545,7 +545,7 @@ app.controller("pageController",function($scope, $route, $routeParams){
 
 			  }else if($routeParams.url=="user-management"){
 			  	$("#user_main_menu").parent().addClass('active');
-			  	$(".page_top").html('<i class="fa fa-users"></i> จัดการข้อมูลตัวแทน');
+			  	$(".page_top").html('<i class="fa fa-user"></i> จัดการข้อมูลตัวแทน');
 			  }else if($routeParams.url=="car-type-management"){
 			  	$("#car_type_main_menu").parent().addClass('active');
 			  	$(".page_top").html('<i class="fa fa-ship"></i> จัดการประเภทเรือ');
@@ -582,7 +582,7 @@ app.controller("pageController",function($scope, $route, $routeParams){
 				$(".page_top").html('<i class="fa fa-ship"></i> รอบเรือ');
 			}else if($routeParams.url=="voter"){
 				$("#voter_main_menu").parent().addClass('active');
-				$(".page_top").html('<i class="fa fa-user"></i> จัดการข้อมูลสมาชิก');
+				$(".page_top").html('<i class="fa fa-users"></i> จัดการข้อมูลสมาชิก');
 			}
 
 

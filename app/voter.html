@@ -48,15 +48,15 @@
                   <thead>
                       <tr>
                           <th>#</th>
-                          <th>ชื่อ-นามสกุล</th>
+                          <th style="text-align: center;">ชื่อ-นามสกุล</th>
                           <th>เลขบัตรประชาชน</th>
-                          <th>บ้านเลขที่</th>
+                          <th style="text-align: center;">บ้านเลขที่</th>
                           <th>หมู่ที่</th>
                           <th>ตำบล</th>
                           <th>อำเภอ</th>
                           <th>เบอร์โทรศัพท์</th>
-                          <th>หัวคะแนน</th>
-                          <th>ตำแหน่ง/ระดับ</th>
+                          <th>ตัวแทน</th>
+                          <th style="text-align: center;">ตำแหน่ง<br>/ระดับ</th>
                           <th style="text-align: center;">จัดการ</th>
                       </tr>
                   </thead>
@@ -331,7 +331,7 @@
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span></button>
-      <h4 class="modal-title">จัดการข้อมูลหัวคะแนน</h4>
+      <h4 class="modal-title">จัดการข้อมูลสมาชิก</h4>
     </div>
     <div class="modal-body">
       
@@ -361,6 +361,14 @@
               <input type="text" class="form-control" id="lastNameTxt" placeholder="นามสกุล">
             </div>
           </div>
+          <div class="form-group">
+            <label for="lastNameTxt" class="col-sm-4 control-label">เลขบัตรประชาชน <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="lastNameTxt" placeholder="เลขบัตรประชาชน">
+            </div>
+          </div>
+
           <div  class="form-group">
             <label for="emailTxt" class="col-sm-4 control-label">บ้านเลขที่ <span class="redFont">*</span></label>
 

@@ -47,7 +47,7 @@ $(document).ready(function(){
 						// 	window.location = "./app/#/pages/home";
 						// }
 
-						window.location = "./app/#/pages/home";
+						window.location = "./app/#/pages/voter";
 						
 						
 						
