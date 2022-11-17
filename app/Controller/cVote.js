@@ -31,53 +31,7 @@ var validateRePasswordFn = function(){
 	}
 	
 }
-var validateFn = function(){
-	var message="";
 
-	// emailTxt
-	// passwordTxt
-	if($("#emailTxt").val()==""){
-		message+="Pleae fill E-mail.\n";
-	}
-	if($("#actionVoter").val()=="add"){
-		if($("#passwordTxt").val()==""){
-			message+="Pleae fill Password.\n";
-		}
-	}
-
-	if($("#titleTxt").val()==""){
-		message+="Pleae fill Title.\n";
-	}
-
-	if($("#fristNameTxt").val()==""){
-		message+="Pleae fill Frist name.\n";
-	}
-
-	if($("#lastNameTxt").val()==""){
-		message+="Pleae fill Last name.\n";
-	}
-	if($("#positionTxt").val()==""){
-		message+="Pleae fill Position.\n";
-	}
-
-	
-
-	if(message!=""){
-		alert(message);
-		return false;
-	}else{
-		return true;
-	}
-
-}
-
-
-/* Example Uses */
-//console.log(isValidDate("0000-00-00"));  // false
-//console.log(isValidDate("2015-01-40"));  // false
-//console.log(isValidDate("2016-11-25"));  // true
-//console.log(isValidDate("2016-02-29"));  // true = leap day
-//console.log(isValidDate("2013-02-29"));  // false = not leap day
 
 
 var validateVoterFn=function(){
@@ -145,6 +99,8 @@ var clearVoterDataFn = function(){
 	$("#groupAddressTxt").val("");
 	$("#subDistrictTxt").val("");
 	$("#districtTxt").val("");
+	$("#telTxt").val("");
+	$("#actionVoter").val("add");
 	
 	
 	
@@ -167,8 +123,11 @@ var findOneVoterDataFn = function(voterID){
 			$("#noAddressTxt").val(data['no_address']);
 			$("#groupAddressTxt").val(data['group_address']);
 			$("#subDistrictTxt").val(data['sub_district']);
-			$("#disDistrictTxt").val(data['district']);
+			$("#districtTxt").val(data['district']);
+			$("#telTxt").val(data['tel']);
 
+			$("#idVoter").val(data['id']);
+			
 			$("#actionVoter").val("edit");
 			
 		}
@@ -212,10 +171,12 @@ var listVoterDataFn = function(data){
 			html+="<tr class='gadeD'>";//อื่นๆ
 		}else if(indexEntry['role']=="0"){
 			html+="<tr class='gadeAA'>";//---- ผู้ดูแลระบบ ----
-		}	     
+		}else {
+			html+="<tr>";//---- ผู้ดูแลระบบ ----
+		}	  	     
 	
 		html+="<td> "+(index+1)+"</td>";
-		html+="<td> "+indexEntry['title']+""+indexEntry['first_name']+" "+indexEntry['last_name']+"</td>";
+		html+="<td> "+indexEntry['first_name']+" "+indexEntry['last_name']+"</td>";
 		html+="<td>"+indexEntry['id_card']+"</td>";
 		html+="<td>"+indexEntry['no_address']+"</td>";
 		html+="<td>"+indexEntry['group_address']+"</td>";
@@ -223,15 +184,22 @@ var listVoterDataFn = function(data){
 		html+="<td>"+indexEntry['district']+"</td>";
 		html+="<td>"+indexEntry['tel']+"</td>";
 		html+="<td>"+indexEntry['profile_first_name']+" "+indexEntry['profile_last_name']+"</td>";
-		html+="<td>"+indexEntry['profile_role']+"</td>";
+		
+		html+="<td>";
+		html+=getRoleNameFn(indexEntry['role']);
+		if(indexEntry['role']==15){
+			html+="("+indexEntry['other']+")";
+		}
+		html+="</td>";
+
 
 
 		html+="<td  style='text-align:center;'>";  
 
-		html+="<button id='edit-"+indexEntry['PROFILE_ID']+"' class='btn btn-warning edit' style='margin-right:3px;'>";
+		html+="<button id='edit-"+indexEntry['id']+"' class='btn btn-warning edit' style='margin-right:3px;'>";
 		html+="<i class='fa fa-pencil'></i>";
 		html+="</button>";
-		html+="<button id='id-"+indexEntry['PROFILE_ID']+"' class='btn btn-danger del'  >";
+		html+="<button id='id-"+indexEntry['id']+"' class='btn btn-danger del'  >";
 		html+="<i class='fa fa-trash-o'></i>";
 	    html+="</button>";
 
@@ -268,7 +236,8 @@ var listVoterDataFn = function(data){
 		var id=this.id.split("-");
 		id=id[1];
 		if(confirm("ยืนยันการลบข้อมูล")){
-			delvoterFn(id);	
+		
+			delVoterFn(id);	
 			//delPicturevoterFn(id);
 		}
 	});
@@ -276,10 +245,12 @@ var listVoterDataFn = function(data){
 }
 
 var getVoterDataFn = function(){
-
+	
+	
 	$.ajax({
-		url:restURL+"/api/public/voter/index",
+		url:restURL+"/api/public/voter",
 		type:"get",
+		data:{"role":sessionStorage.getItem('galbalRole'),"id":sessionStorage.getItem('galbalEmpId')},
 		dataType:"json",
 		async:false,
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
@@ -295,17 +266,13 @@ var getVoterDataFn = function(){
 
 
 var voterInsertFn = function(){
-	/*
-	$("#firstNameTxt").val(data['first_name']);
-	$("#lastNameTxt").val(data['last_name']);
-	$("#idCardTxt").val(data['id_card']);
-	$("#noAddressTxt").val(data['no_address']);
-	$("#groupAddressTxt").val(data['group_address']);
-	$("#subDistrictTxt").val(data['sub_district']);
-	$("#disDistrictTxt").val(data['district']);
-	*/
 	
-	validateFn();
+	
+	validateVoterFn();
+	var telTxt="";
+	if($("#telTxt").val()!=""){
+		telTxt=$("#telTxt").val();
+	}
 	$.ajax({
 		url:restURL+"/api/public/voter",
 		type:"post",
@@ -318,7 +285,8 @@ var voterInsertFn = function(){
 			"group_address":$("#groupAddressTxt").val(),
 			"sub_district":$("#subDistrictTxt").val(),
 			"district":$("#districtTxt").val(),
-			"profile_id":$("#profileIdTxt").val(),
+			"tel":telTxt,
+			"profile_id": sessionStorage.getItem('galbalEmpId')
 			
 		},
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
@@ -336,10 +304,15 @@ var voterInsertFn = function(){
 }
 
 var voterUpdateFn = function(){
-	validateFn();
+	validateVoterFn();
+
+	var telTxt="";
+	if($("#telTxt").val()!=""){
+		telTxt=$("#telTxt").val();
+	}
 	
 	$.ajax({
-		url:restURL+"/api/public/voter/"+$("#idvoter").val(),
+		url:restURL+"/api/public/voter/"+$("#idVoter").val(),
 		type:"patch",
 		dataType:"json",
 		data:{
@@ -350,6 +323,7 @@ var voterUpdateFn = function(){
 			"group_address":$("#groupAddressTxt").val(),
 			"sub_district":$("#subDistrictTxt").val(),
 			"district":$("#districtTxt").val(),
+			"tel":telTxt,
 		
 		},
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
@@ -385,10 +359,10 @@ $(document).ready(function(){
 		if($("#actionVoter").val()=="add"){
 			
 
-			VoterInsertFn();
+			voterInsertFn();
 
 		}else{
-			VoterUpdateFn();
+			voterUpdateFn();
 		}
 		
 		

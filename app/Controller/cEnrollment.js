@@ -19,7 +19,7 @@ var validateRePasswordFn = function(){
 	}
 	
 }
-var validateFn = function(){
+var validateFn_bk = function(){
 	var message="";
 
 	// emailTxt
@@ -79,7 +79,7 @@ var validateEnrollmentFn=function(){
 	 		validate+="กรุณากรอกชื่อผู้ใช้ \n";
 	 	}
 		else if( !isValidEmail($("#emailTxt").val()) ){ 
-	 		validate+="ชื่อผู้ใช้ไม่ถูกต้อง\n";
+	 		validate+="ชื่อผู้ใช้ไม่ถูกต้อง(ตัวอย่าง abc@gmail.com)\n";
 	 	}
 	 	if($("#actionEnrollment").val()=="add"){
 		 	if($("#passwordTxt").val()==""){
@@ -101,6 +101,13 @@ var validateEnrollmentFn=function(){
 
 		if($("#districtTxt").val()==""){
 			validate+="กรุณากรอกอำเภอ \n";
+		}
+
+		if($("#roleText").val()==15){
+			
+			if($("#otherTxt").val()==""){
+				validate+="กรุณากรอกตำแหน่ง/ระดับ อื่นๆ \n";
+			}
 		}
 
 		
@@ -158,6 +165,14 @@ var clearEnrollmentDataFn = function(){
 	$("#actionEnrollment").val("add");
 	$("#idEnrollment").val("");
 	$("#listBlackListPicture").hide();
+
+	$("#subDistrictTxt").val("");
+	$("#districtTxt").val("");
+	$("#otherTxt").val("");
+
+	$("#roleText").prop("selectedIndex", 0);
+	$("#roleText").prop("disabled",false);
+	$("#otherArea").hide();
 	
 }
 
@@ -188,20 +203,19 @@ var findOneEnrollmentDataFn = function(profileID){
 			$("#subDistrictTxt").val(data['sub_district']);
 			$("#districtTxt").val(data['district']);
 
+
+			if(profileID==37){
+				$("#roleText").prop("disabled",true);
+			}else{
+				$("#roleText").prop("disabled",false);
+			}
+
 			
 
 			
 			
 			
 			
-			if(data['GENDER']=="M"){
-				
-				$("#genderM").prop("checked", true);
-			
-				
-			}else{
-				$("#genderW").prop("checked", true);
-			}
 			
 			if(data['ACTIVE_FLAG']=="1"){
 			
@@ -217,6 +231,12 @@ var findOneEnrollmentDataFn = function(profileID){
 			//alert(data['role']);
 			//$("div#roleText select").val(data['role']);
 			$('select#roleText  option[value="'+data['role']+'"]').prop("selected", true);
+			$("#otherTxt").val(data['other']);
+			if(data['role']==15){
+				$("#otherArea").show();
+			}else{
+				$("#otherArea").hide();
+			}
 
 			
 
@@ -273,40 +293,27 @@ if(indexEntry['role']=="1"){
 		html+="<td> "+indexEntry['TITLE']+""+indexEntry['FIRST_NAME']+" "+indexEntry['LAST_NAME']+"</td>";
 		html+="<td>"+indexEntry['sub_district']+"</td>";
 		html+="<td>"+indexEntry['district']+"</td>";
-		//html+="<td>"+indexEntry['GENDER']+"</td>";
-		if(indexEntry['role']=="1"){
-			html+="<td>นายก อบต.</td>";
-		}else if(indexEntry['role']=="2"){
-			html+="<td>กำนันคนปัจจุบัน</td>";
-		}else if(indexEntry['role']=="3"){
-			html+="<td>รองนายก อบต.</td>";
-		}else if(indexEntry['role']=="4"){
-			html+="<td>ประธานสภา อบต.</td>";
-		}else if(indexEntry['role']=="5"){
-			html+="<td>รองประธานสภา อบต.</td>";
-		}else if(indexEntry['role']=="6"){
-			html+="<td>ผู้ใหญ่บ้าน</td>";
-		}else if(indexEntry['role']=="7"){
-			html+="<td>ส.อบต.</td>";
-		}else if(indexEntry['role']=="8"){
-			html+="<td>อดีตนายก อบต.</td>";
-		}else if(indexEntry['role']=="9"){
-			html+="<td>อดีตกำนัน</td>";
-		}else if(indexEntry['role']=="10"){
-			html+="<td>อดีต ส.อบต.</td>";
-		}else if(indexEntry['role']=="11"){
-			html+="<td>สารวัตรกำนัน</td>";
-		}else if(indexEntry['role']=="12"){
-			html+="<td>อดีตผู้ใหญ่บ้าน</td>";
-		}else if(indexEntry['role']=="13"){
-			html+="<td>ผู้นำชุมชน</td>";
-		}else if(indexEntry['role']=="14"){
-			html+="<td>อสม.</td>";
-		}else if(indexEntry['role']=="15"){
-			html+="<td>อื่นๆ</td>";
-		}else if(indexEntry['role']=="0"){
-			html+="<td>ผู้ดูแลระบบ</td>";
+		
+		html+="<td>";
+
+		html+=getRoleNameFn(indexEntry['role']);
+		if(indexEntry['role']==15){
+			html+="("+indexEntry['other']+")";
 		}
+		html+="</td>";
+
+		html+="<td>";
+
+		if(indexEntry['ACTIVE_FLAG']==1){
+			html+="อนุญาต";
+		}else{
+			html+="ไม่อนุญาต";
+		}
+			
+		
+		html+="</td>";
+		
+		
 		
 		html+="<td  style='text-align:center;'>";  
 		
@@ -315,7 +322,7 @@ if(indexEntry['role']=="1"){
 		html+="</button>";
 		
 
-		if(indexEntry['role']!=0){
+		if(indexEntry['PROFILE_ID']!=37){
 		html+="<button id='id-"+indexEntry['PROFILE_ID']+"' class='btn btn-danger del'  >";
 		html+="<i class='fa fa-trash-o'></i>";
 	    html+="</button>";
@@ -367,7 +374,7 @@ if(indexEntry['role']=="1"){
 	$(document).on("click",".del",function(){
 		var id=this.id.split("-");
 		id=id[1];
-		if(confirm("Do you want to Delete this data.")){
+		if(confirm("ยืนยันการลบข้อมูล")){
 			delEnrollmentFn(id);	
 			//delPictureEnrollmentFn(id);
 		}
@@ -449,7 +456,7 @@ var enrollmentInsertFn = function(){
 	alert($("#addressTxt").val());
 	alert(activeTxt);
 	*/
-	validateFn();
+	//validateFn();
 	$.ajax({
 		url:restURL+"/api/public/profile",
 		type:"post",
@@ -469,7 +476,9 @@ var enrollmentInsertFn = function(){
 			"CREATED_BY":sessionStorage.getItem('galbalUsername'),
 
 			"sub_district":$("#subDistrictTxt").val(),
-			"district":$("#districtTxt").val()
+			"district":$("#districtTxt").val(),
+			"other":$("#otherTxt").val()
+			
 
 			
 		},
@@ -494,7 +503,7 @@ var enrollmentInsertFn = function(){
 }
 
 var enrollmentUpdateFn = function(){
-	validateFn();
+	//validateFn();
 	var activeTxt="";
 	if($("#activeTxt").prop("checked")==true){
 		activeTxt="1";
@@ -522,7 +531,8 @@ var enrollmentUpdateFn = function(){
 			"role":$("#roleText").val(),
 			"CREATED_BY":sessionStorage.getItem('galbalUsername'),
 			"sub_district":$("#subDistrictTxt").val(),
-			"district":$("#districtTxt").val()
+			"district":$("#districtTxt").val(),
+			"other":$("#otherTxt").val()
 		
 		},
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
@@ -550,15 +560,8 @@ $(document).ready(function(){
 		$(".changePasswordArea").show();
 		
 	});
-	$('#dateOfBirthTxt').datepicker({
-	    //comment the beforeShow handler if you want to see the ugly overlay
-	    beforeShow: function() {
-	        setTimeout(function(){
-	            $('.ui-datepicker').css('z-index', 99999999999999);
-	        }, 0);
-	    }
-	});
-	 $("#dateOfBirthTxt").datepicker( "option", "dateFormat", "yy-mm-dd");
+	
+	 
 	
 	 
 	 
@@ -591,19 +594,13 @@ $(document).ready(function(){
 	});
 
 
-	//if($("#actionEnrollment").val()=="edit"){
-		// $("#setChangePass").prop("checked",false);
-		// $(".changePasswordArea").hide();
-		// $("#setChangePass").click(function(){
-		// 	if ($(this).is(":checked"))
-		// 	{
-		// 	  // it is checked
-		// 	  	$(".changePasswordArea").show();
-		// 	}else{
-		// 		$(".changePasswordArea").hide();
-		// 	}
-		// });
-	//}
+	$("#roleText").change(function(){
+		if($(this).val()==15){
+			$("#otherArea").show();
+		}else{
+			$("#otherArea").hide();
+		}
+	});
 	
 	
 	

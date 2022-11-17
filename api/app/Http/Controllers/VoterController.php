@@ -27,16 +27,33 @@ class VoterController extends Controller
 	
 	public function index(Request $request)
 	{		
-		$items = DB::select("
-		SELECT v.id,v.first_name,v.last_name,v.id_card,v.no_address,
-		v.group_address,v.sub_district,v.district,tel,v.profile_id,
-		p.first_name as profile_first_name,p.last_name as profile_last_name,p.role
-FROM voter v
-inner join profile p on v.profile_id=p.profile_id
-
-		"
-		//,array('%'.$request->Voter_id.'%')
-	);
+		
+		if ($request->role == 0) {
+			$items = DB::select("
+			SELECT v.id,v.first_name,v.last_name,v.id_card,v.no_address,
+			v.group_address,v.sub_district,v.district,tel,v.profile_id,p.other,
+			p.first_name as profile_first_name,p.last_name as profile_last_name,p.role as role
+			FROM voter v
+			inner join profile p on v.profile_id=p.profile_id
+			order by p.role
+			"
+			//,array('%'.$request->Voter_id.'%')
+			);
+		} else {
+			$items = DB::select("
+			SELECT v.id,v.first_name,v.last_name,v.id_card,v.no_address,
+			v.group_address,v.sub_district,v.district,tel,v.profile_id,p.other,
+			p.first_name as profile_first_name,p.last_name as profile_last_name,p.role as role
+			FROM voter v
+			
+			inner join profile p on v.profile_id=p.profile_id
+			where v.profile_id=?
+			order by p.role
+			"
+			,array($request->id)
+			);
+		}
+	
 		return response()->json($items);
 	}
 	
@@ -46,7 +63,7 @@ inner join profile p on v.profile_id=p.profile_id
 	{
 	//'org_code' => 'required|max:15|unique:org',
 		$validator = Validator::make($request->all(), [
-			'first_name' => 'required|unique:voter',
+			'first_name' => 'required',
 			'last_name' => 'required',
 			'id_card' => 'required',
 			'no_address' => 'required',

@@ -41,13 +41,13 @@ $(document).ready(function(){
 						sessionStorage.setItem('galbalRole', data.role);
 						sessionStorage.setItem('galbalUsername', $("#username").val());
 
-						// if(data.role==1){
-						// 	window.location = "./app/user-booking.html";
-						// }else{
-						// 	window.location = "./app/#/pages/home";
-						// }
+						if(data.role==0){
+							window.location = "./app/#/pages/user-management";
+						}else{
+							window.location = "./app/#/pages/voter";
+						}
 
-						window.location = "./app/#/pages/voter";
+						
 						
 						
 						
@@ -61,7 +61,13 @@ $(document).ready(function(){
 				error: function (xhr, ajaxOptions, thrownError) {
 		        console.log(xhr.status);
 		        console.log(thrownError);
-		      	alert(xhr.status+"\n"+thrownError);
+		      	//alert(xhr.status+"\n"+thrownError);
+				//alert(xhr.status);
+				if(xhr.status===401){
+					alert("username หรือ password ไม่ถูกต้อง");
+				}else if(xhr.status==500){
+					alert("ยังไม่อนุญาตให้ใช้งาน");
+				}
       			}
 			})
 			

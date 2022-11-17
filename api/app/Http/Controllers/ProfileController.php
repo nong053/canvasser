@@ -31,10 +31,10 @@ class ProfileController extends Controller
 			SELECT 
 			PROFILE_ID,TITLE,EMAIL,FIRST_NAME,LAST_NAME,POSITION,GENDER,
 			DATE_OF_BIRTH,ADDRESS,CREATED_DATE,CREATED_BY,	
-			UPDATED_DATE,UPDATED_BY,ACTIVE_FLAG,role,sub_district,district
+			UPDATED_DATE,UPDATED_BY,ACTIVE_FLAG,role,sub_district,district,other
 			FROM profile
 			/*where ACTIVE_FLAG='1'*/
-			order by FIRST_NAME,LAST_NAME
+			order by role
 
 		"
 		//,array('%'.$request->profile_id.'%')
@@ -176,6 +176,7 @@ class ProfileController extends Controller
 			$item->role=$request->role;
 			$item->sub_district=$request->sub_district;
 			$item->district=$request->district;
+			$item->other=$request->other;
 			
 
 

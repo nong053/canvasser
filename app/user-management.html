@@ -77,6 +77,7 @@
                             <th>ตำบล</th>
                             <th>อำเภอ</th>
                             <th>ตำแหน่ง/ระดับ/สิทธิ์</th>
+                            <th>อนุญาตใช้งาน</th>
                             <th style="text-align: center;">จัดการ</th>
                         </tr>
                     </thead>
@@ -313,7 +314,7 @@
           <div class="box-body">
         
             <div  class="form-group">
-              <label for="emailTxt" class="col-sm-4 control-label">ชื่อผู้ใช้งาน <span class="redFont">*</span></label>
+              <label for="emailTxt" class="col-sm-4 control-label">ชื่อผู้ใช้งาน(E-mail) <span class="redFont">*</span></label>
 
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="emailTxt" placeholder="ชื่อผู้ใช้งาน">
@@ -326,7 +327,7 @@
                 <input type="checkbox" checked='checked'  id="setChangePass">
               </div>
             </div>
-            <br style="clear: both;">
+            <!-- <br style="clear: both;"> -->
 
             
 
@@ -387,7 +388,7 @@
             </div>
 
             
-
+            
             <div class="form-group">
               <label for="" class="col-sm-4 control-label">ตำแหน่ง/ระดับ/สิทธิ์ <span class="redFont">*</span></label>
 
@@ -410,11 +411,20 @@
                     <option value="13">ผู้นำชุมชน</option>
                     <option value="14">อสม.</option>
                     <option value="15">อื่นๆ</option>
-                    <option value="0">---- ผู้ดูแลระบบ ----</option>
+                    <option  value="0">---- ผู้ดูแลระบบ ----</option>
                     
                 </select>
 
               </div>
+              
+            </div>
+            <div id="otherArea" style="display: none;" class="form-group">
+              <label for="otherTxt" class="col-sm-4 control-label"> <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="otherTxt" placeholder="อื่นๆ">
+              </div>
+            </div>
 
               
               <div class="col-sm-9">
@@ -426,7 +436,7 @@
               </div>
               </div>
 
-            </div>
+           
 
             <!-- <div class="form-group">
               <label for="positionTxt" class="col-sm-4 control-label">อื่นๆ <span class="redFont">*</span></label>
