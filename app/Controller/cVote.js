@@ -1,5 +1,17 @@
 var profilePicturePath="";
 
+/*
+id
+first_name
+last_name
+id_card
+no_address
+group_address
+sub_district
+district
+tel
+*/
+
 function isValidDate(dateString) {
   var regEx = /^\d{4}-\d{2}-\d{2}$/;
   if(!dateString.match(regEx)) return false;  // Invalid format
@@ -27,7 +39,7 @@ var validateFn = function(){
 	if($("#emailTxt").val()==""){
 		message+="Pleae fill E-mail.\n";
 	}
-	if($("#actionEnrollment").val()=="add"){
+	if($("#actionVoter").val()=="add"){
 		if($("#passwordTxt").val()==""){
 			message+="Pleae fill Password.\n";
 		}
@@ -67,50 +79,54 @@ var validateFn = function(){
 //console.log(isValidDate("2016-02-29"));  // true = leap day
 //console.log(isValidDate("2013-02-29"));  // false = not leap day
 
-function isValidEmail(emailText) {
-    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-    return pattern.test(emailText);
-};
 
-var validateEnrollmentFn=function(){
+var validateVoterFn=function(){
 		var validate="";
 
-		if($("#emailTxt").val()==""){
-	 		validate+="Email not empty. \n";
-	 	}else if( !isValidEmail($("#emailTxt").val()) ){ 
-	 		validate+="Email Invalid \n";
-	 	}
-	 	if($("#actionEnrollment").val()=="add"){
-		 	if($("#passwordTxt").val()==""){
-		 		validate+="Password not empty. \n";
-		 	}
+		if($("#firstNameTxt").val()==""){
+	 		validate+="กรุณากรอกชื่อ\n";
 	 	}
 
-	 	if($("#setChangePass").is(":checked")==true){
-	
-		
-			if($("#passwordTxt").val()!=$("#rePasswordTxt").val()){
-				validate+="Password not Match.\n";
-				//alert(message);
-				//return false;
-			}
+		if($("#lastNameTxt").val()==""){
+			validate+="กรุณากรอกนามสกุล \n";
 		}
+
+		if($("#idCardTxt").val()==""){
+			validate+="กรุณากรอกรหัสบัตรประชาชน \n";
+		}
+
+		if($("#noAddressTxt").val()==""){
+			validate+="กรุณากรอกบ้านเลขที่ \n";
+		}
+		if($("#groupAddressTxt").val()==""){
+			validate+="กรุณากรอกหมู่ที่. \n";
+		}
+
+		if($("#subDistrictTxt").val()==""){
+			validate+="กรุณากรอกตำบล \n";
+		}
+
+		if($("#districtTxt").val()==""){
+			validate+="กรุณากรอกอำเภอ \n";
+		}
+
+	 	
 
 		
 	 	
 	 	return validate;
 	}
-var delEnrollmentFn = function(profileID){
+var delVoterFn = function(voterID){
 	
 	$.ajax({
-		url:restURL+"/api/public/profile/"+profileID,
+		url:restURL+"/api/public/voter/"+voterID,
 		type:"delete",
 		dataType:"json",
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
 		success:function(data){
 			//console.log(data);
 			if(data.status==200){
-				getEnrollmentDataFn();
+				getVoterDataFn();
 			}
 			
 		},
@@ -120,29 +136,23 @@ var delEnrollmentFn = function(profileID){
 	});
 }
 
-var clearEnrollmentDataFn = function(){
+var clearVoterDataFn = function(){
 	
-	$("#emailTxt").val("");
-	$("#passwordTxt").val("");
-	$("#titleTxt").val("");
-	$("#fristNameTxt").val("");
+	$("#firstNameTxt").val("");
 	$("#lastNameTxt").val("");
-	$("#positionTxt").val("");
-	$("#genderM").prop("checked", true)
-	$("#nationalityTxt").val("");
-	$("#dateOfBirthTxt").val("");
-	$("#religionTxt").val("");
-	$("#addressTxt").val("	");
-	$("#activeTxt").prop("checked",true);
-	$("#actionEnrollment").val("add");
-	$("#idEnrollment").val("");
-	$("#listBlackListPicture").hide();
+	$("#idCardTxt").val("");
+	$("#noAddressTxt").val("");
+	$("#groupAddressTxt").val("");
+	$("#subDistrictTxt").val("");
+	$("#districtTxt").val("");
+	
+	
 	
 }
 
-var findOneEnrollmentDataFn = function(profileID){
+var findOneVoterDataFn = function(voterID){
 	$.ajax({
-		url:restURL+"/api/public/profile/"+profileID,
+		url:restURL+"/api/public/voter/"+voterID,
 		type:"get",
 		dataType:"json",
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
@@ -151,117 +161,80 @@ var findOneEnrollmentDataFn = function(profileID){
 		
 			
 
-			$("#emailTxt").val(data['email']);
-			//$("#passwordTxt").val(data['password']);
-			//$("#rePasswordTxt").val(data['password']);
-			$("#titleTxt").val(data['TITLE']);
-			$("#fristNameTxt").val(data['FIRST_NAME']);
-			$("#lastNameTxt").val(data['LAST_NAME']);
-			$("#genderM").prop("checked", true)
-			$("#dateOfBirthTxt").val(data['DATE_OF_BIRTH']);
-			$("#positionTxt").val(data['POSITION']);
-			$("#addressTxt").val(data['ADDRESS']);
-			$("#actionEnrollment").val("edit");
-			$("#idEnrollment").val(data['profile_id']);
-			
-			
-			
-			
-			if(data['GENDER']=="M"){
-				
-				$("#genderM").prop("checked", true);
-			
-				
-			}else{
-				$("#genderW").prop("checked", true);
-			}
-			
-			if(data['ACTIVE_FLAG']=="1"){
-			
-				$("#activeTxt").prop("checked",true);
-				
-			}else{
-				
-				$("#activeTxt").prop("checked",false);
-			}
+			$("#firstNameTxt").val(data['first_name']);
+			$("#lastNameTxt").val(data['last_name']);
+			$("#idCardTxt").val(data['id_card']);
+			$("#noAddressTxt").val(data['no_address']);
+			$("#groupAddressTxt").val(data['group_address']);
+			$("#subDistrictTxt").val(data['sub_district']);
+			$("#disDistrictTxt").val(data['district']);
 
-
-			$("select#titleTxt select").val(data['title']);
-			//alert(data['role']);
-			//$("div#roleText select").val(data['role']);
-			$('select#roleText  option[value="'+data['role']+'"]').prop("selected", true);
-
-			
-
-			
-			
-			
+			$("#actionVoter").val("edit");
 			
 		}
 	});
 };
-var listEnrollmentDataFn = function(data){
-	/*listDataEnrollmentArea*/
+
+var listVoterDataFn = function(data){
+	/*listDataVoterArea*/
 	var html="";
 	$.each(data,function(index,indexEntry){
-		/*
-			 out.println("cardId="+cardId+"<br>");
-		     out.println("passportID="+passportID+"<br>");
-		     out.println("title="+title+"<br>");
-		     out.println("fristName="+fristName+"<br>");
-		     out.println("lastName="+lastName+"<br>");
-		     out.println("gender="+gender+"<br>");
-		     out.println("nationality="+nationality+"<br>");
-		     out.println("dateOfBirth="+dateOfBirth+"<br>");
-		     out.println("religion="+religion+"<br>");
-		     out.println("address="+address+"<br>");
-		     out.println("active="+active+"<br>");
-		     
-0["11", 
-1"146060003344",
-2"4544433",
-3"Mr.",
-4"Assama",
-5"Binladen",
-6"M",
-7"Turkish",
-8"2017-09-21"
-9,"Issalm",
-10"Sosl Road NewTulabalud 11555",
-11"2017-09-21 18:03:46.0",
-12"admin","2017-09-21 18:03:46.0",
-13"admin"
-14,"1"]]		 */
-		     
-	html+="<tr>";
-		//html+="<td style='text-align:center;'> <img width=\"39px;\" src=\"img/profile_small.jpg\" class=\"img-circle\" alt=\"image\"></td>";
-		html+="<td> "+(index+1)+"</td>";
-		//html+="<td> "+indexEntry['TITLE']+"</td>";
-		html+="<td> "+indexEntry['TITLE']+""+indexEntry['FIRST_NAME']+" "+indexEntry['LAST_NAME']+"</td>";
-		html+="<td>"+indexEntry['POSITION']+"</td>";
-		html+="<td></td>";
-		//html+="<td>"+indexEntry['GENDER']+"</td>";
+		
 		if(indexEntry['role']=="1"){
-			html+="<td>ผู้ใช้ทั่วไป</td>";
+			html+="<tr class='gadeA'>";//นายก อบต.
 		}else if(indexEntry['role']=="2"){
-			html+="<td>ผู้มอบหมายเรือและคนขับ</td>";
+			html+="<tr class='gadeA'>";//กำนันคนปัจจุบัน
 		}else if(indexEntry['role']=="3"){
-			html+="<td>ผู้อนุมัติ</td>";
+			html+="<tr class='gadeB'>";//รองนายก อบต.
 		}else if(indexEntry['role']=="4"){
-			html+="<td>ผู้ดูแลระบบ</td>";
-		}
-		
+			html+="<tr class='gadeB'>";//ประธานสภา อบต.
+		}else if(indexEntry['role']=="5"){
+			html+="<tr class='gadeB'>";//รองประธานสภา อบต.
+		}else if(indexEntry['role']=="6"){
+			html+="<tr class='gadeB'>";//ผู้ใหญ่บ้าน
+		}else if(indexEntry['role']=="7"){
+			html+="<tr class='gadeB'>";//ส.อบต.
+		}else if(indexEntry['role']=="8"){
+			html+="<tr class='gadeB'>";//อดีตนายก อบต.
+		}else if(indexEntry['role']=="9"){
+			html+="<tr class='gadeB'>";//อดีตกำนัน
+		}else if(indexEntry['role']=="10"){
+			html+="<tr class='gadeC'>";//อดีต ส.อบต.
+		}else if(indexEntry['role']=="11"){
+			html+="<tr class='gadeC'>";//สารวัตรกำนัน
+		}else if(indexEntry['role']=="12"){
+			html+="<tr class='gadeC'>";//อดีตผู้ใหญ่บ้าน
+		}else if(indexEntry['role']=="13"){
+			html+="<tr class='gadeD'>";//ผู้นำชุมชน
+		}else if(indexEntry['role']=="14"){
+			html+="<tr class='gadeD'>";//อสม.
+		}else if(indexEntry['role']=="15"){
+			html+="<tr class='gadeD'>";//อื่นๆ
+		}else if(indexEntry['role']=="0"){
+			html+="<tr class='gadeAA'>";//---- ผู้ดูแลระบบ ----
+		}	     
+	
+		html+="<td> "+(index+1)+"</td>";
+		html+="<td> "+indexEntry['title']+""+indexEntry['first_name']+" "+indexEntry['last_name']+"</td>";
+		html+="<td>"+indexEntry['id_card']+"</td>";
+		html+="<td>"+indexEntry['no_address']+"</td>";
+		html+="<td>"+indexEntry['group_address']+"</td>";
+		html+="<td>"+indexEntry['sub_district']+"</td>";
+		html+="<td>"+indexEntry['district']+"</td>";
+		html+="<td>"+indexEntry['tel']+"</td>";
+		html+="<td>"+indexEntry['profile_first_name']+" "+indexEntry['profile_last_name']+"</td>";
+		html+="<td>"+indexEntry['profile_role']+"</td>";
+
+
 		html+="<td  style='text-align:center;'>";  
-		
+
 		html+="<button id='edit-"+indexEntry['PROFILE_ID']+"' class='btn btn-warning edit' style='margin-right:3px;'>";
 		html+="<i class='fa fa-pencil'></i>";
 		html+="</button>";
-		
-		//if(indexEntry['role']!=2 && indexEntry['role']!=3){
 		html+="<button id='id-"+indexEntry['PROFILE_ID']+"' class='btn btn-danger del'  >";
 		html+="<i class='fa fa-trash-o'></i>";
 	    html+="</button>";
-		//}
+
 		html+="</td>";
 		
 	html+="</tr>";
@@ -269,7 +242,7 @@ var listEnrollmentDataFn = function(data){
 	
 	});
 	/* comment here for disable line.*/
-	/*$("#listDataEnrollmentArea").html(html);*/
+	$("#listDataVoterArea").html(html);
 
 
 
@@ -277,8 +250,6 @@ var listEnrollmentDataFn = function(data){
 	var table=$('#userDataTable').DataTable();
 	
 
-	// $("#userDataTable_filter label input").val("");
-	// $('div.dataTables_filter input').attr( 'type', 'text' ).val("");
 	
 	
 	//maanage
@@ -288,81 +259,32 @@ var listEnrollmentDataFn = function(data){
 		var id=this.id.split("-");
 		id=id[1];
 		//alert(id);
-		$("#enrollmentModal").modal("show");
-		findOneEnrollmentDataFn(id);
-
-
-		$(".changePasswordControlArea").show();
-		$("#setChangePass").prop("checked",false);
-		$(".changePasswordArea").hide();
-		$("#setChangePass").click(function(){
-			if ($(this).is(":checked"))
-			{
-			  // it is checked
-			  	$(".changePasswordArea").show();
-			}else{
-				$(".changePasswordArea").hide();
-			}
-		});
-
-		
+		$("#voterModal").modal("show");
+		findOneVoterDataFn(id);
 		
 	});
 	$(document).off("click",".del");
 	$(document).on("click",".del",function(){
 		var id=this.id.split("-");
 		id=id[1];
-		if(confirm("Do you want to Delete this data.")){
-			delEnrollmentFn(id);	
-			//delPictureEnrollmentFn(id);
+		if(confirm("ยืนยันการลบข้อมูล")){
+			delvoterFn(id);	
+			//delPicturevoterFn(id);
 		}
 	});
 	
-
-
-  
-	
 }
 
-var getEnrollmentDataFn = function(){
+var getVoterDataFn = function(){
 
 	$.ajax({
-		url:restURL+"/api/public/profile/index",
+		url:restURL+"/api/public/voter/index",
 		type:"get",
 		dataType:"json",
 		async:false,
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
 		success:function(data){
-			listEnrollmentDataFn(data);
-			
-			
-			
-		}
-	});
-	
-}
-
-var listMilitaryRankDataFn = function(data){
-		var html="";
-		$.each(data,function(index,indexEntry){
-
-			html+="<option value='"+indexEntry['military_rank']+"'>"+indexEntry['military_rank']+"</option>";
-		});
-
-		$("#titleTxt").html(html);
-}
-var getMilitaryRankDataFn = function(){
-
-	$.ajax({
-		url:restURL+"/api/public/profile/military_rank",
-		type:"get",
-		dataType:"json",
-		async:false,
-		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
-		success:function(data){
-			listMilitaryRankDataFn(data);
-			
-			
+			listVoterDataFn(data);
 			
 		}
 	});
@@ -370,101 +292,72 @@ var getMilitaryRankDataFn = function(){
 }
 
 
-var enrollmentInsertFn = function(){
-	var activeTxt="";
-	if($("#activeTxt").prop("checked")==true){
-		activeTxt="1";
-	}else{
-		activeTxt="0";
-	}
+
+
+var voterInsertFn = function(){
 	/*
-	alert($("#cardIdTxt").val());
-	alert($("#passportIDTxt").val());
-	alert($("#titleTxt").val());
-	alert($("#fristNameTxt").val());
-	alert($("#lastNameTxt").val());
-	alert($(".genderTxt:checked").val());
-	alert($("#nationalityTxt").val());
-	alert($("#dateOfBirthTxt").val());
-	alert($("#religionTxt").val());
-	alert($("#addressTxt").val());
-	alert(activeTxt);
+	$("#firstNameTxt").val(data['first_name']);
+	$("#lastNameTxt").val(data['last_name']);
+	$("#idCardTxt").val(data['id_card']);
+	$("#noAddressTxt").val(data['no_address']);
+	$("#groupAddressTxt").val(data['group_address']);
+	$("#subDistrictTxt").val(data['sub_district']);
+	$("#disDistrictTxt").val(data['district']);
 	*/
+	
 	validateFn();
 	$.ajax({
-		url:restURL+"/api/public/profile",
+		url:restURL+"/api/public/voter",
 		type:"post",
 		dataType:"json",
 		data:{
-			"EMAIL":$("#emailTxt").val(),
-			"PASSWORD":$("#passwordTxt").val(),
-			"TITLE":$("#titleTxt").val(),
-			"FIRST_NAME":$("#fristNameTxt").val(),
-			"LAST_NAME":$("#lastNameTxt").val(),
-			"GENDER":$(".genderTxt:checked").val(),
-			"POSITION":$("#positionTxt").val(),
-			"DATE_OF_BIRTH":$("#dateOfBirthTxt").val(),
-			"ADDRESS":$("#addressTxt").val(),
-			"ACTIVE_FLAG":activeTxt,
-			"role":$("#roleText").val(),
-			"CREATED_BY":sessionStorage.getItem('galbalUsername'),
+			"first_name":$("#firstNameTxt").val(),
+			"last_name":$("#lastNameTxt").val(),
+			"id_card":$("#idCardTxt").val(),
+			"no_address":$("#noAddressTxt").val(),
+			"group_address":$("#groupAddressTxt").val(),
+			"sub_district":$("#subDistrictTxt").val(),
+			"district":$("#districtTxt").val(),
+			"profile_id":$("#profileIdTxt").val(),
+			
 		},
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
 		success:function(data){
 			//console.log(data);
 			if(data.status==200){
 			
-					$("#enrollmentModal").modal("hide");
-					getEnrollmentDataFn();
+					$("#voterModal").modal("hide");
+					getVoterDataFn();
 
-			}else if(data.status==400){
-				if(data.data.EMAIL[0]!=''){
-					alert(data.data.EMAIL[0]);
-				}
-				//console.log();
-				
 			}
 		}
 	});
 		
 }
 
-var enrollmentUpdateFn = function(){
+var voterUpdateFn = function(){
 	validateFn();
-	var activeTxt="";
-	if($("#activeTxt").prop("checked")==true){
-		activeTxt="1";
-	}else{
-		activeTxt="0";
-	}
-
-	//alert($("#roleText").val());
 	
 	$.ajax({
-		url:restURL+"/api/public/profile/"+$("#idEnrollment").val(),
+		url:restURL+"/api/public/voter/"+$("#idvoter").val(),
 		type:"patch",
 		dataType:"json",
 		data:{
-		    "email":$("#emailTxt").val(),
-		    "password":$("#passwordTxt").val(),
-			"TITLE":$("#titleTxt").val(),
-			"FIRST_NAME":$("#fristNameTxt").val(),
-			"LAST_NAME":$("#lastNameTxt").val(),
-			"GENDER":$(".genderTxt:checked").val(),
-			"POSITION":$("#positionTxt").val(),
-			"DATE_OF_BIRTH":$("#dateOfBirthTxt").val(),
-			"ADDRESS":$("#addressTxt").val(),
-			"ACTIVE_FLAG":activeTxt,
-			"role":$("#roleText").val(),
-			"CREATED_BY":sessionStorage.getItem('galbalUsername'),
+		    "first_name":$("#firstNameTxt").val(),
+			"last_name":$("#lastNameTxt").val(),
+			"id_card":$("#idCardTxt").val(),
+			"no_address":$("#noAddressTxt").val(),
+			"group_address":$("#groupAddressTxt").val(),
+			"sub_district":$("#subDistrictTxt").val(),
+			"district":$("#districtTxt").val(),
 		
 		},
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
 		success:function(data){
 			//console.log(data);
 			if(data.status==200){
-				$("#enrollmentModal").modal("hide");
-				getEnrollmentDataFn();
+				$("#voterModal").modal("hide");
+				getVoterDataFn();
 			}
 		}
 	});
@@ -472,47 +365,30 @@ var enrollmentUpdateFn = function(){
 }
 $(document).ready(function(){
 	
-
-	//getConfigDataFn();
-	//alert(profilePicturePath);
 	
-	$("#addEnrollment").click(function(){
-		clearEnrollmentDataFn();
-		$("#enrollmentModal").modal("show");
-
-		$(".changePasswordControlArea").hide();
-		$(".changePasswordArea").show();
-		
+	$("#addVoter").click(function(){
+		clearVoterDataFn();
+		$("#voterModal").modal("show");
 	});
-	$('#dateOfBirthTxt').datepicker({
-	    //comment the beforeShow handler if you want to see the ugly overlay
-	    beforeShow: function() {
-	        setTimeout(function(){
-	            $('.ui-datepicker').css('z-index', 99999999999999);
-	        }, 0);
-	    }
-	});
-	 $("#dateOfBirthTxt").datepicker( "option", "dateFormat", "yy-mm-dd");
 	
-	 
-	 
+ 
 	 //get data
-	 getEnrollmentDataFn();
-	 getMilitaryRankDataFn();
+	 getVoterDataFn();
+
 	 
 	$("#btnSubmit").click(function(){
 		
-		if(validateEnrollmentFn()!=""){
-			alert(validateEnrollmentFn());
+		if(validateVoterFn()!=""){
+			alert(validateVoterFn());
 			return false;
 		}
-		if($("#actionEnrollment").val()=="add"){
+		if($("#actionVoter").val()=="add"){
 			
 
-			enrollmentInsertFn();
+			VoterInsertFn();
 
 		}else{
-			enrollmentUpdateFn();
+			VoterUpdateFn();
 		}
 		
 		
@@ -520,8 +396,8 @@ $(document).ready(function(){
 	
 	});
 	$("#btnReset").click(function(){
-		clearEnrollmentDataFn();
-		$("#btnImageReset").click();
+		clearVoterDataFn();
+		
 	});
 
     

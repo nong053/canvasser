@@ -602,7 +602,7 @@ $(".mainMenu").click(function(){
 $(".menuDisplay").hide();
 //alert('role'+sessionStorage.getItem('galbalRole'));
 
-if(sessionStorage.getItem('galbalRole')=='4'){//admin
+if(sessionStorage.getItem('galbalRole')=='0'){//admin
 	//userMenu adminMenu AssignerMenu approversMenu
 	$(".adminMenu").show();
 	// alert(4);

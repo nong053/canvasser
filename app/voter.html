@@ -27,7 +27,7 @@
         <div class="box">
           <div class="box-header">
             <h3 class="box-title "> 
-              <button id="addEnrollment" class="btn btn-primary pull-right" ><i class='ion ion-person-add'></i> เพิ่มสมาชิก</button>
+              <button id="addVoter" class="btn btn-primary pull-right" ><i class='ion ion-person-add'></i> เพิ่มสมาชิก</button>
             </h3>
           </div>
           <!-- /.box-header -->
@@ -60,8 +60,8 @@
                           <th style="text-align: center;">จัดการ</th>
                       </tr>
                   </thead>
-                  <tbody id='listDataEnrollmentArea'>
-
+                  <tbody id='listDataVoterArea'>
+<!--
                     <tr role="row" class="odd gadeA" >
                       <td class="sorting_1"> 1</td>
                       <td> Voter1 Test</td>
@@ -301,7 +301,7 @@
                             <i class="fa fa-trash-o"></i></button>
                           </td>
                       </tr>
-                    
+                    -->
 
                   </tbody>
               </table>
@@ -325,7 +325,7 @@
 
 
 <!-- from user management-->
-<div class="modal fade" id="enrollmentModal">
+<div class="modal fade" id="voterModal">
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
@@ -343,6 +343,17 @@
      <form  class="form-horizontal "> 
         <div class="box-body">
       
+<!--
+id
+first_name firstName
+last_name lastName
+id_card idCard
+no_address noAddressTxt
+group_address groupAddress
+sub_district  subDistrict
+district district
+tel tel
+-->
           
 
          
@@ -362,48 +373,48 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="lastNameTxt" class="col-sm-4 control-label">เลขบัตรประชาชน <span class="redFont">*</span></label>
+            <label for="idCardTxt" class="col-sm-4 control-label">เลขบัตรประชาชน <span class="redFont">*</span></label>
 
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="lastNameTxt" placeholder="เลขบัตรประชาชน">
+              <input type="text" class="form-control" id="idCardTxt" placeholder="เลขบัตรประชาชน">
             </div>
           </div>
 
           <div  class="form-group">
-            <label for="emailTxt" class="col-sm-4 control-label">บ้านเลขที่ <span class="redFont">*</span></label>
+            <label for="noAddressTxt" class="col-sm-4 control-label">บ้านเลขที่ <span class="redFont">*</span></label>
 
             <div class="col-sm-8">
-              <input type="email" class="form-control" id="emailTxt" placeholder="บ้านเลขที่">
+              <input type="text" class="form-control" id="noAddressTxt" placeholder="บ้านเลขที่">
             </div>
           </div>
 
           <div  class="form-group">
-            <label for="emailTxt" class="col-sm-4 control-label">หมู่ที่ <span class="redFont">*</span></label>
+            <label for="groupAddressTxt" class="col-sm-4 control-label">หมู่ที่ <span class="redFont">*</span></label>
 
             <div class="col-sm-8">
-              <input type="email" class="form-control" id="emailTxt" placeholder="หมู่ที่">
+              <input type="text" class="form-control" id="groupAddressTxt" placeholder="หมู่ที่">
             </div>
           </div>
 
           <div  class="form-group">
-            <label for="emailTxt" class="col-sm-4 control-label">ตำบล <span class="redFont">*</span></label>
+            <label for="subDistrictTxt" class="col-sm-4 control-label">ตำบล <span class="redFont">*</span></label>
 
             <div class="col-sm-8">
-              <input type="email" class="form-control" id="emailTxt" placeholder="ตำบล">
+              <input type="text" class="form-control" id="subDistrictTxt" placeholder="ตำบล">
             </div>
           </div>
           <div  class="form-group">
-            <label for="emailTxt" class="col-sm-4 control-label">อำเภอ <span class="redFont">*</span></label>
+            <label for="districtTxt" class="col-sm-4 control-label">อำเภอ <span class="redFont">*</span></label>
 
             <div class="col-sm-8">
-              <input type="email" class="form-control" id="emailTxt" placeholder="อำเภอ">
+              <input type="text" class="form-control" id="districtTxt" placeholder="อำเภอ">
             </div>
           </div>
           <div  class="form-group">
-            <label for="emailTxt" class="col-sm-4 control-label">เบอร์โทรศัพท์</label>
+            <label for="telTxt" class="col-sm-4 control-label">เบอร์โทรศัพท์</label>
 
             <div class="col-sm-8">
-              <input type="email" class="form-control" id="emailTxt" placeholder="เบอร์โทรศัพท์">
+              <input type="text" class="form-control" id="telTxt" placeholder="เบอร์โทรศัพท์">
             </div>
           </div>
           </div>
@@ -413,8 +424,8 @@
            <span class="redFont">*</span> จำเป็นต้องกรอก
           <button type="button" class="btn btn-default pull-right" data-dismiss="modal" aria-label="Close" style="margin-left: 5px;">ยกเลิก</button>
           <!-- <button type="reset" class="btn btn-default">ยกเลิก</button> -->
-          <input type="hidden" name="actionEnrollment" id="actionEnrollment" value="add">
-          <input type="hidden" name="idEnrollment" id="idEnrollment" value="">
+          <input type="hidden" name="actionVoter" id="actionVoter" value="add">
+          <input type="hidden" name="idVoter" id="idVoter" value="">
           <button id='btnSubmit' type="button" class="btn btn-info pull-right" >บันทึก</button>
         </div>
         <!-- /.box-footer -->

@@ -76,23 +76,43 @@ var validateEnrollmentFn=function(){
 		var validate="";
 
 		if($("#emailTxt").val()==""){
-	 		validate+="Email not empty. \n";
-	 	}else if( !isValidEmail($("#emailTxt").val()) ){ 
-	 		validate+="Email Invalid \n";
+	 		validate+="กรุณากรอกชื่อผู้ใช้ \n";
+	 	}
+		else if( !isValidEmail($("#emailTxt").val()) ){ 
+	 		validate+="ชื่อผู้ใช้ไม่ถูกต้อง\n";
 	 	}
 	 	if($("#actionEnrollment").val()=="add"){
 		 	if($("#passwordTxt").val()==""){
-		 		validate+="Password not empty. \n";
+		 		validate+="กรุณากรอกรหัสผ่าน \n";
 		 	}
 	 	}
+
+		if($("#fristNameTxt").val()==""){
+			validate+="กรุณากรอกชื่อ \n";
+		}
+
+		if($("#lastNameTxt").val()==""){
+			validate+="กรุณากรอกนามสกุล \n";
+		}
+
+		if($("#subDistrictTxt").val()==""){
+			validate+="กรุณากรอกตำบล \n";
+		}
+
+		if($("#districtTxt").val()==""){
+			validate+="กรุณากรอกอำเภอ \n";
+		}
+
+		
+
+
 
 	 	if($("#setChangePass").is(":checked")==true){
 	
 		
 			if($("#passwordTxt").val()!=$("#rePasswordTxt").val()){
-				validate+="Password not Match.\n";
-				//alert(message);
-				//return false;
+				validate+="รหัสผ่านไม่ตรงกัน\n";
+				
 			}
 		}
 
@@ -124,7 +144,8 @@ var clearEnrollmentDataFn = function(){
 	
 	$("#emailTxt").val("");
 	$("#passwordTxt").val("");
-	$("#titleTxt").val("");
+	
+	$("#titleTxt").prop("selectedIndex", 0);
 	$("#fristNameTxt").val("");
 	$("#lastNameTxt").val("");
 	$("#positionTxt").val("");
@@ -163,6 +184,12 @@ var findOneEnrollmentDataFn = function(profileID){
 			$("#addressTxt").val(data['ADDRESS']);
 			$("#actionEnrollment").val("edit");
 			$("#idEnrollment").val(data['profile_id']);
+
+			$("#subDistrictTxt").val(data['sub_district']);
+			$("#districtTxt").val(data['district']);
+
+			
+
 			
 			
 			
@@ -204,50 +231,80 @@ var listEnrollmentDataFn = function(data){
 	/*listDataEnrollmentArea*/
 	var html="";
 	$.each(data,function(index,indexEntry){
-		/*
-			 out.println("cardId="+cardId+"<br>");
-		     out.println("passportID="+passportID+"<br>");
-		     out.println("title="+title+"<br>");
-		     out.println("fristName="+fristName+"<br>");
-		     out.println("lastName="+lastName+"<br>");
-		     out.println("gender="+gender+"<br>");
-		     out.println("nationality="+nationality+"<br>");
-		     out.println("dateOfBirth="+dateOfBirth+"<br>");
-		     out.println("religion="+religion+"<br>");
-		     out.println("address="+address+"<br>");
-		     out.println("active="+active+"<br>");
-		     
-0["11", 
-1"146060003344",
-2"4544433",
-3"Mr.",
-4"Assama",
-5"Binladen",
-6"M",
-7"Turkish",
-8"2017-09-21"
-9,"Issalm",
-10"Sosl Road NewTulabalud 11555",
-11"2017-09-21 18:03:46.0",
-12"admin","2017-09-21 18:03:46.0",
-13"admin"
-14,"1"]]		 */
-		     
-	html+="<tr>";
+				 
+
+if(indexEntry['role']=="1"){
+	html+="<tr class='gadeA'>";//นายก อบต.
+}else if(indexEntry['role']=="2"){
+	html+="<tr class='gadeA'>";//กำนันคนปัจจุบัน
+}else if(indexEntry['role']=="3"){
+	html+="<tr class='gadeB'>";//รองนายก อบต.
+}else if(indexEntry['role']=="4"){
+	html+="<tr class='gadeB'>";//ประธานสภา อบต.
+}else if(indexEntry['role']=="5"){
+	html+="<tr class='gadeB'>";//รองประธานสภา อบต.
+}else if(indexEntry['role']=="6"){
+	html+="<tr class='gadeB'>";//ผู้ใหญ่บ้าน
+}else if(indexEntry['role']=="7"){
+	html+="<tr class='gadeB'>";//ส.อบต.
+}else if(indexEntry['role']=="8"){
+	html+="<tr class='gadeB'>";//อดีตนายก อบต.
+}else if(indexEntry['role']=="9"){
+	html+="<tr class='gadeB'>";//อดีตกำนัน
+}else if(indexEntry['role']=="10"){
+	html+="<tr class='gadeC'>";//อดีต ส.อบต.
+}else if(indexEntry['role']=="11"){
+	html+="<tr class='gadeC'>";//สารวัตรกำนัน
+}else if(indexEntry['role']=="12"){
+	html+="<tr class='gadeC'>";//อดีตผู้ใหญ่บ้าน
+}else if(indexEntry['role']=="13"){
+	html+="<tr class='gadeD'>";//ผู้นำชุมชน
+}else if(indexEntry['role']=="14"){
+	html+="<tr class='gadeD'>";//อสม.
+}else if(indexEntry['role']=="15"){
+	html+="<tr class='gadeD'>";//อื่นๆ
+}else if(indexEntry['role']=="0"){
+	html+="<tr class='gadeAA'>";//---- ผู้ดูแลระบบ ----
+}
+	
 		//html+="<td style='text-align:center;'> <img width=\"39px;\" src=\"img/profile_small.jpg\" class=\"img-circle\" alt=\"image\"></td>";
 		html+="<td> "+(index+1)+"</td>";
 		//html+="<td> "+indexEntry['TITLE']+"</td>";
 		html+="<td> "+indexEntry['TITLE']+""+indexEntry['FIRST_NAME']+" "+indexEntry['LAST_NAME']+"</td>";
-		html+="<td>"+indexEntry['POSITION']+"</td>";
-		html+="<td></td>";
+		html+="<td>"+indexEntry['sub_district']+"</td>";
+		html+="<td>"+indexEntry['district']+"</td>";
 		//html+="<td>"+indexEntry['GENDER']+"</td>";
 		if(indexEntry['role']=="1"){
-			html+="<td>ผู้ใช้ทั่วไป</td>";
+			html+="<td>นายก อบต.</td>";
 		}else if(indexEntry['role']=="2"){
-			html+="<td>ผู้มอบหมายเรือและคนขับ</td>";
+			html+="<td>กำนันคนปัจจุบัน</td>";
 		}else if(indexEntry['role']=="3"){
-			html+="<td>ผู้อนุมัติ</td>";
+			html+="<td>รองนายก อบต.</td>";
 		}else if(indexEntry['role']=="4"){
+			html+="<td>ประธานสภา อบต.</td>";
+		}else if(indexEntry['role']=="5"){
+			html+="<td>รองประธานสภา อบต.</td>";
+		}else if(indexEntry['role']=="6"){
+			html+="<td>ผู้ใหญ่บ้าน</td>";
+		}else if(indexEntry['role']=="7"){
+			html+="<td>ส.อบต.</td>";
+		}else if(indexEntry['role']=="8"){
+			html+="<td>อดีตนายก อบต.</td>";
+		}else if(indexEntry['role']=="9"){
+			html+="<td>อดีตกำนัน</td>";
+		}else if(indexEntry['role']=="10"){
+			html+="<td>อดีต ส.อบต.</td>";
+		}else if(indexEntry['role']=="11"){
+			html+="<td>สารวัตรกำนัน</td>";
+		}else if(indexEntry['role']=="12"){
+			html+="<td>อดีตผู้ใหญ่บ้าน</td>";
+		}else if(indexEntry['role']=="13"){
+			html+="<td>ผู้นำชุมชน</td>";
+		}else if(indexEntry['role']=="14"){
+			html+="<td>อสม.</td>";
+		}else if(indexEntry['role']=="15"){
+			html+="<td>อื่นๆ</td>";
+		}else if(indexEntry['role']=="0"){
 			html+="<td>ผู้ดูแลระบบ</td>";
 		}
 		
@@ -257,11 +314,12 @@ var listEnrollmentDataFn = function(data){
 		html+="<i class='fa fa-pencil'></i>";
 		html+="</button>";
 		
-		//if(indexEntry['role']!=2 && indexEntry['role']!=3){
+
+		if(indexEntry['role']!=0){
 		html+="<button id='id-"+indexEntry['PROFILE_ID']+"' class='btn btn-danger del'  >";
 		html+="<i class='fa fa-trash-o'></i>";
 	    html+="</button>";
-		//}
+		}
 		html+="</td>";
 		
 	html+="</tr>";
@@ -269,7 +327,7 @@ var listEnrollmentDataFn = function(data){
 	
 	});
 	/* comment here for disable line.*/
-	/*$("#listDataEnrollmentArea").html(html);*/
+	$("#listDataEnrollmentArea").html(html);
 
 	var table=$('#userDataTable').DataTable();
 	
@@ -340,11 +398,17 @@ var getEnrollmentDataFn = function(){
 var listMilitaryRankDataFn = function(data){
 		var html="";
 		$.each(data,function(index,indexEntry){
-
-			html+="<option value='"+indexEntry['military_rank']+"'>"+indexEntry['military_rank']+"</option>";
+			if(index==0){
+				html+="<option selected='selected' value='"+indexEntry['military_rank']+"'>"+indexEntry['military_rank']+"</option>";
+			}else{
+				html+="<option value='"+indexEntry['military_rank']+"'>"+indexEntry['military_rank']+"</option>";
+			}
+			
 		});
 
 		$("#titleTxt").html(html);
+		$("#titleTxt").prop("selectedIndex", 0);
+
 }
 var getMilitaryRankDataFn = function(){
 
@@ -403,6 +467,11 @@ var enrollmentInsertFn = function(){
 			"ACTIVE_FLAG":activeTxt,
 			"role":$("#roleText").val(),
 			"CREATED_BY":sessionStorage.getItem('galbalUsername'),
+
+			"sub_district":$("#subDistrictTxt").val(),
+			"district":$("#districtTxt").val()
+
+			
 		},
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
 		success:function(data){
@@ -452,6 +521,8 @@ var enrollmentUpdateFn = function(){
 			"ACTIVE_FLAG":activeTxt,
 			"role":$("#roleText").val(),
 			"CREATED_BY":sessionStorage.getItem('galbalUsername'),
+			"sub_district":$("#subDistrictTxt").val(),
+			"district":$("#districtTxt").val()
 		
 		},
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},

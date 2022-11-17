@@ -31,7 +31,7 @@ class ProfileController extends Controller
 			SELECT 
 			PROFILE_ID,TITLE,EMAIL,FIRST_NAME,LAST_NAME,POSITION,GENDER,
 			DATE_OF_BIRTH,ADDRESS,CREATED_DATE,CREATED_BY,	
-			UPDATED_DATE,UPDATED_BY,ACTIVE_FLAG,role
+			UPDATED_DATE,UPDATED_BY,ACTIVE_FLAG,role,sub_district,district
 			FROM profile
 			/*where ACTIVE_FLAG='1'*/
 			order by FIRST_NAME,LAST_NAME
@@ -66,8 +66,11 @@ class ProfileController extends Controller
 			'PASSWORD' => 'required',
 			'FIRST_NAME' => 'required',
 			'LAST_NAME' => 'required',
-			'POSITION' => 'required',
+			//'POSITION' => 'required',
 			'ACTIVE_FLAG' => 'required|integer',
+			'sub_district' => 'required',
+			'district' => 'required'
+			
 		]);
 
 		if ($validator->fails()) {
@@ -112,8 +115,10 @@ class ProfileController extends Controller
 			'password' => 'required',
 			'FIRST_NAME' => 'required',
 			'LAST_NAME' => 'required',
-			'POSITION' => 'required',
+			//'POSITION' => 'required',
 			'ACTIVE_FLAG' => 'required',
+			'sub_district' => 'required',
+			'district' => 'required'
 		]);
 
 		if ($validator->fails()) {
@@ -146,8 +151,10 @@ class ProfileController extends Controller
 			//'password' => 'required',
 			'FIRST_NAME' => 'required',
 			'LAST_NAME' => 'required',
-			'POSITION' => 'required',
+			//'POSITION' => 'required',
 			'ACTIVE_FLAG' => 'required|integer',
+			'sub_district' => 'required',
+			'district' => 'required'
 		]);
 
 		if ($validator->fails()) {
@@ -167,6 +174,9 @@ class ProfileController extends Controller
 			$item->ADDRESS=$request->ADDRESS;
 			$item->ACTIVE_FLAG=$request->ACTIVE_FLAG;
 			$item->role=$request->role;
+			$item->sub_district=$request->sub_district;
+			$item->district=$request->district;
+			
 
 
 			
