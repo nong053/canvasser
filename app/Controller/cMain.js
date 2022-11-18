@@ -377,7 +377,13 @@ var dropdownYearListFn = function(data){
 	
 
 }
-
+var checkNullFn = function(text){
+	var data="";
+	if(text==null || ""){
+		data=text;
+	}
+	return data;
+}
 var checkSessionFn = function(){
 
 	var token= sessionStorage.getItem('galbalToken');

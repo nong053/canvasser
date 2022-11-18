@@ -35,6 +35,8 @@ Route::group(['middleware' => 'cors'], function()
 	// Voter  //
 	Route::get('voter', 'VoterController@index');
 	Route::post('voter', 'VoterController@store');
+	Route::get('voter/check_duplicate_name', 'VoterController@checkDupliCateName');
+	
 	Route::get('voter/{voter_id}', 'VoterController@show');
 	Route::patch('voter/{voter_id}', 'VoterController@update');
 	Route::delete('voter/{voter_id}', 'VoterController@destroy');	

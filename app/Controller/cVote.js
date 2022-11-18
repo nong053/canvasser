@@ -176,7 +176,7 @@ var listVoterDataFn = function(data){
 		}	  	     
 	
 		html+="<td> "+(index+1)+"</td>";
-		html+="<td> "+indexEntry['first_name']+" "+indexEntry['last_name']+"</td>";
+		html+="<td class='fullname' id='fullname-"+indexEntry['id']+"'>"+jQuery.trim(indexEntry['first_name'])+" "+jQuery.trim(indexEntry['last_name'])+"</td>";
 		html+="<td>"+indexEntry['id_card']+"</td>";
 		html+="<td>"+indexEntry['no_address']+"</td>";
 		html+="<td>"+indexEntry['group_address']+"</td>";
@@ -212,10 +212,18 @@ var listVoterDataFn = function(data){
 	/* comment here for disable line.*/
 	$("#listDataVoterArea").html(html);
 
+	var table=$('#userDataTable').DataTable({
+		paging: true,
+		retrieve: true
+		
+	});
 
 
-
-	var table=$('#userDataTable').DataTable();
+	
+		
+		
+	
+	
 	
 
 	
@@ -344,7 +352,40 @@ $(document).ready(function(){
 		clearVoterDataFn();
 		$("#voterModal").modal("show");
 	});
+
+	if(sessionStorage.getItem('galbalRole')==0){
+		$("#checkDuplicateName").show();
+		$("#showAllData").show();
+
+	}else{
+		$("#checkDuplicateName").hide();
+		$("#showAllData").hide();
+	}
+
+	$("#checkDuplicateName").click(function(){
+		
+		//check_duplicate_name
+		
+		
+		$.ajax({
+			url:restURL+"/api/public/voter/check_duplicate_name",
+			type:"get",
+			//data:{"role":sessionStorage.getItem('galbalRole'),"id":sessionStorage.getItem('galbalEmpId')},
+			dataType:"json",
+			async:false,
+			headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
+			success:function(data){
+				listVoterDataFn(data);
+				
+			}
+		});	
+			
+		
+	});
 	
+	$("#showAllData").click(function(){
+		location.reload();
+	});
  
 	 //get data
 	 getVoterDataFn();

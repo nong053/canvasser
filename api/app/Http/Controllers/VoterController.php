@@ -35,7 +35,7 @@ class VoterController extends Controller
 			p.first_name as profile_first_name,p.last_name as profile_last_name,p.role as role
 			FROM voter v
 			inner join profile p on v.profile_id=p.profile_id
-			order by p.role
+			order by p.role,v.first_name,v.last_name
 			"
 			//,array('%'.$request->Voter_id.'%')
 			);
@@ -48,11 +48,37 @@ class VoterController extends Controller
 			
 			inner join profile p on v.profile_id=p.profile_id
 			where v.profile_id=?
-			order by p.role
+			order by p.role,v.first_name,v.last_name
 			"
 			,array($request->id)
 			);
 		}
+	
+		return response()->json($items);
+	}
+
+
+	public function checkDupliCateName(Request $request)
+	{		
+		
+		
+			$items = DB::select("
+			
+			SELECT a.*,p.other,p.first_name as profile_first_name,p.last_name as profile_last_name,p.role as role
+			FROM voter a 
+			JOIN (SELECT first_name, last_name, COUNT(*)
+			FROM voter 
+			GROUP BY first_name, last_name
+			HAVING count(*) > 1 ) b
+			ON a.first_name = b.first_name
+			AND a.last_name = b.last_name
+			left join profile p on p.profile_id=a.profile_id
+
+			ORDER BY a.first_name"
+
+			);
+		
+		
 	
 		return response()->json($items);
 	}
