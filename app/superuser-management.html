@@ -1,0 +1,277 @@
+<style>
+.redFont{
+  font-weight: bold;
+  color: red;
+}
+  .gadeAA{
+    background-color:#CC7000;
+  }
+  .gadeA{
+        background-color:#ff8c00;
+    }
+    .gadeB{
+        background-color:#FFA333;
+    }
+    .gadeC{
+        background-color:#FFBA66;
+    }
+    .gadeD{
+        background-color:#FFD199;
+    }
+</style>
+
+<!-- Main content -->
+    <section class="content1">
+        
+
+
+      <!--CONTENT01-->
+      <div class="row">
+       
+      </div>
+      <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title "> 
+                <button id="addEnrollment" class="btn btn-primary pull-right" ><i class='ion ion-person-add'></i> เพิ่มตัวแทนเขต</button>
+                
+              </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <div class="row">
+                  <div class="col-sm-6">
+                    
+                  </div>
+              <div class="col-sm-6">
+                
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-sm-12">
+                
+
+                 <!--
+                  <option value="1">นายก อบต.</option>
+                    <option value="2">กำนันคนปัจจุบัน</option>
+                    <option value="3">รองนายก อบต.</option>
+                    <option value="4">ประธาน สภา อบต.</option>
+                    <option value="5">ผู้ใหญ่บ้าน</option>
+                    <option value="6">ส.อบต.</option>
+                    <option value="7">สารวัตรกำนัน</option>
+                    <option value="8">อดีตผู้ใหญ่บ้าน</option>
+                    <option value="9">ผู้นำชุมชน</option>
+                    <option value="10">อสม.</option>
+                    <option value="11">อื่นๆ</option>
+                    <option value="15">ผู้ดูแลระบบ</option>
+                 -->
+
+
+              
+
+                  <table id="userDataTable" class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ชื่อ-นามสกุล</th>
+                            <th>ตำบล</th>
+                            <th>อำเภอ</th>
+                            <th>สิทธิ์/เขต</th>
+                            <th>อนุญาตใช้งาน</th>
+                            <th style="text-align: center;">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id='listDataEnrollmentArea'>
+                     
+
+                    </tbody>
+                </table>
+
+
+
+
+
+               
+
+
+            </div>
+          </div>
+
+            </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+
+
+<!-- from user management-->
+<div class="modal fade" id="enrollmentModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">จัดการข้อมูลตัวแทนเขต</h4>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Content here.-->
+        <div class="box box-info">
+       
+        <!-- /.box-header -->
+        <!-- form start -->
+       <form  class="form-horizontal "> 
+          <div class="box-body">
+        
+            <div  class="form-group">
+              <label for="emailTxt" class="col-sm-4 control-label">ชื่อผู้ใช้งาน(E-mail) <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="emailTxt" placeholder="ชื่อผู้ใช้งาน">
+              </div>
+            </div>
+
+            <div  class="form-group changePasswordControlArea">
+              <label for="setChangePass" class="col-sm-4 control-label">เปลี่ยนรหัสผ่าน <span class="redFont">*</span></label>
+              <div class="col-sm-8">
+                <input type="checkbox" checked='checked'  id="setChangePass">
+              </div>
+            </div>
+            <!-- <br style="clear: both;"> -->
+
+            
+
+            <div  class="form-group changePasswordArea">
+              <label for="passwordTxt" class="col-sm-4 control-label ">รหัสผ่าน <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+                <input type="password" class="form-control" id="passwordTxt" placeholder="รหัสผ่าน">
+              </div>
+            </div>
+            <div class="form-group changePasswordArea">
+              <label for="rePasswordTxt" class="col-sm-4 control-label ">ยืนยันรหัสผ่าน <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+                <input type="password" class="form-control " id="rePasswordTxt" placeholder="ยืนยันรหัสผ่าน">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="titleTxt" class="col-sm-4 control-label">คำนำหน้า <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+               
+                <select id='titleTxt' class="form-control">
+             
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fristNameTxt" class="col-sm-4 control-label">ชื่อ <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="fristNameTxt" placeholder="ชื่อ">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="lastNameTxt" class="col-sm-4 control-label">นามสกุล <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="lastNameTxt" placeholder="นามสกุล">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="subDistrictTxt" class="col-sm-4 control-label">ตำบล <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="subDistrictTxt" placeholder="ตำบล">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="districtTxt" class="col-sm-4 control-label">อำเภอ <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="districtTxt" placeholder="อำเภอ">
+              </div>
+            </div>
+
+            
+            
+            <div class="form-group">
+              <label for="" class="col-sm-4 control-label">สิทธิ์ <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+                 <select id='roleText' class="form-control">
+                    
+                    
+                    <option  value="99">---- ตัวแทนเขต ----</option>
+                    <option  value="0">---- ผู้ดูแลระบบ ----</option>
+                    
+                    
+                </select>
+
+              </div>
+              
+            </div>
+            <div id="demarcateArea"  class="form-group">
+              <label for="demarcateTxt" class="col-sm-4 control-label"> <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="demarcateTxt" placeholder="ชื่อเขต">
+              </div>
+            </div>
+
+              
+              <div class="col-sm-9">
+              <div  class="form-group changePasswordControlArea">
+                <label for="setChangePass" class="col-sm-4 control-label">เปิดใช้งาน</label>
+                <div class="col-sm-8">
+                  <input type="checkbox" checked='checked'  id="activeTxt">
+                </div>
+              </div>
+              </div>
+
+           
+
+            <!-- <div class="form-group">
+              <label for="positionTxt" class="col-sm-4 control-label">อื่นๆ <span class="redFont">*</span></label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="positionTxt" placeholder="ระบุ">
+              </div>
+            </div>  -->
+            
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer" >
+            <span class="redFont">*</span> จำเป็นต้องกรอก
+            <button type="button" class="btn btn-default pull-right" data-dismiss="modal" aria-label="Close" style="margin-left: 5px;">ยกเลิก</button>
+            <!-- <button type="reset" class="btn btn-default">ยกเลิก</button> -->
+            <input type="hidden" name="actionEnrollment" id="actionEnrollment" value="add">
+            <input type="hidden" name="idEnrollment" id="idEnrollment" value="">
+            <button id='btnSubmit' type="button" class="btn btn-info pull-right" >บันทึก</button>
+          </div>
+          <!-- /.box-footer -->
+        </form>
+      </div>
+        <!-- Content here.-->
+
+      </div>
+   
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- from user management-->
+
+<script type="text/javascript" src="./Controller/cSuperUser.js"></script>
+
+
+
+
