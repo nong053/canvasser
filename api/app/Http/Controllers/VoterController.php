@@ -58,6 +58,9 @@ class VoterController extends Controller
 			order by p.role,v.first_name,v.last_name
 			",array($request->id,$request->id));
 		} else {
+
+			
+
 			$items = DB::select("
 			SELECT v.id,v.first_name,v.last_name,v.id_card,v.no_address,
 			v.group_address,v.sub_district,v.district,tel,v.profile_id,p.other,p.profile_id  as profile_super_id,
@@ -102,25 +105,27 @@ class VoterController extends Controller
 				
 
 			}else if($request->role==99){
+			$profile_list="";	
+			$profile_group = DB::select("select group_concat(profile_id) as profile_group from profile where demarcate_id=? or profile_id=?",array($request->id,$request->id));
+			$profile_list=$profile_group[0]->profile_group;
+
 			$items = DB::select("
 			
-				SELECT a.*,p.other,p.first_name as profile_first_name,p.last_name as profile_last_name,p.role as role,demarcate_id as demarcate_super_id,p.profile_id  as profile_super_id,
-				(select demarcate from profile where profile_id=demarcate_super_id) as demarcate
-				,(select demarcate from profile where profile_id=profile_super_id   ) as demarcate_super
-				FROM voter a 
-				JOIN (SELECT first_name, last_name, COUNT(*)
-				FROM voter 
-				GROUP BY first_name, last_name
-				HAVING count(*) > 1 ) b
-				ON a.first_name = b.first_name
-				AND a.last_name = b.last_name
-				left join profile p on p.profile_id=a.profile_id
-				where  p.demarcate_id=? or p.profile_id=?
-				
-
-				ORDER BY a.first_name",array($request->id,$request->id)
-
-				);
+			SELECT a.*,p.other,p.first_name as profile_first_name,p.last_name as profile_last_name,p.role as role,demarcate_id as demarcate_super_id,p.profile_id  as profile_super_id,
+			(select demarcate from profile where profile_id=demarcate_super_id) as demarcate
+			,(select demarcate from profile where profile_id=profile_super_id   ) as demarcate_super
+			FROM voter a 
+			JOIN (SELECT first_name, last_name,profile_id, COUNT(*)
+			FROM voter 
+			 where profile_id in($profile_list) 
+			GROUP BY first_name, last_name
+			HAVING count(*) > 1 ) b
+			ON a.first_name = b.first_name
+			AND a.last_name = b.last_name 
+			left join profile p on p.profile_id=a.profile_id
+			where p.profile_id=? or demarcate_id=? 
+			ORDER BY a.first_name",array($request->id,$request->id)
+			);
 			}
 		
 		
@@ -150,19 +155,25 @@ class VoterController extends Controller
 
 		}else if($request->role==99){
 
-		
+			$profile_list="";	
+			$profile_group = DB::select("select group_concat(profile_id) as profile_group from profile where demarcate_id=? or profile_id=?",array($request->id,$request->id));
+			$profile_list=$profile_group[0]->profile_group;
+
+
 			$items = DB::select("
 			SELECT a.*,p.other,p.first_name as profile_first_name,p.last_name as profile_last_name,p.role as role,demarcate_id as demarcate_super_id,p.profile_id  as profile_super_id,
 			(select demarcate from profile where profile_id=demarcate_super_id) as demarcate
 			,(select demarcate from profile where profile_id=profile_super_id   ) as demarcate_super
 			FROM voter a 
-			JOIN (SELECT id_card, COUNT(*)
+			JOIN (SELECT id_card, profile_id,COUNT(*)
 			FROM voter 
+			where profile_id in($profile_list) 
 			GROUP BY id_card
 			HAVING count(*) > 1 ) b
 			ON a.id_card = b.id_card
+			
 			left join profile p on p.profile_id=a.profile_id
-			where  p.demarcate_id=?  or p.profile_id=?
+			where p.profile_id=? or demarcate_id=? 
 			
 			ORDER BY a.id_card
 
