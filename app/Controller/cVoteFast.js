@@ -451,7 +451,9 @@ $(document).ready(function(){
 	
 
 	$("#searchData").keyup(function(){
-		console.log($(this).val());
+		$(".clickAction").removeClass("btn-info");
+		$("#showAllData").removeClass("btn-default").addClass("btn-info");
+
 		getVoterDataFn(rpp=$("#rppByUser").val(),page=$("#pageByUser").val(),$(this).val());
 	});
 
@@ -523,6 +525,7 @@ $(document).ready(function(){
 		
 		checkDuplicateNameFn();
 		$("#param_action").val("checkDuplicateName");
+		$("#searchData").val("");
 			
 		
 	});
@@ -532,6 +535,7 @@ $(document).ready(function(){
 		$(this).removeClass("btn-default").addClass("btn-info");
 		checkDuplicateIdCardFn();
 		$("#param_action").val("checkDuplicateIdCard");
+		$("#searchData").val("");
 		
 	});
 
