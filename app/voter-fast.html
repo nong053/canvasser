@@ -1,0 +1,265 @@
+<style>
+    .gadeAA{
+      background-color:#CC7000;
+    }
+    .gadeA{
+        background-color:#ff8c00;
+    }
+    .gadeB{
+        background-color:#FFA333;
+    }
+    .gadeC{
+        background-color:#FFBA66;
+    }
+    .gadeD{
+        background-color:#FFD199;
+    }
+    .redFont{
+        color: red;
+        font-weight: bold;
+    }
+    
+</style>
+<!-- Main content -->
+<section class="content1"> 
+    <!--CONTENT01-->
+    <div class="row">
+     
+    </div>
+    <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title "> 
+              
+              <button id="addVoter" class="btn btn-primary pull-right1" ><i class='ion ion-person-add'></i> เพิ่มสมาชิก</button>
+              <button style="display:none;" id="checkDuplicateName" class="btn btn-default pull-left1 clickAction" ><i class='glyphicon glyphicon-ok'></i> ตรวจสอบชื่อซ้ำ</button>
+              <button style="display:none;" id="checkDuplicateIdCard" class="btn btn-default pull-left1 clickAction" ><i class='glyphicon glyphicon-ok'></i> ตรวจสอบเลขบัตรช้ำ</button>
+              <button style="display:none;" id="showAllData" class="btn btn-info pull-left1 clickAction" ><i class='glyphicon glyphicon-eye-open'></i> แสดงข้อมูลทั้งหมด</button> 
+              <input type="hidden" id="param_action" value="showAllData">
+            </h3>
+            <!-- <div class="alert alert-info" style="padding:15px; margin-top: 15px; margin-bottom: 0px;" role="alert"> <strong>ตรวจสอบชื่อซ้ำ</strong> </div> -->
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+              <div class="row">
+                <div class="col-sm-6">
+                  
+                </div>
+            <div class="col-sm-6">
+              
+            </div>
+          </div>
+            <div class="row">
+              <div class="col-sm-12">
+                
+                
+                <table id="userDataTable" class="table">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th style="text-align: center;">ชื่อ-นามสกุล</th>
+                          <th>เลขบัตรประชาชน</th>
+                          <th style="text-align: center;">บ้านเลขที่</th>
+                          <th>หมู่ที่</th>
+                          <th>ตำบล</th>
+                          <th>อำเภอ</th>
+                          <th>เบอร์โทรศัพท์</th>
+                          
+                          <th>ตัวแทน</th>
+                          <th style="text-align: center;">ตำแหน่ง<br>/ระดับ</th>
+                          <th>เขต</th>
+                          
+                          <th style="text-align: center; width: 150px;">จัดการ</th>
+                      </tr>
+                  </thead>
+                  <tbody id='listDataVoterArea'>
+
+
+                  </tbody>
+              </table>
+              <div style="float:right; position: relative; top:0px;">
+              <select class="form-control" id="rppByUser">
+                <option value="10">แสดง 10 แถว</option>
+                <option value="50">แสดง 50 แถว</option>
+                <option value="100">แสดง 100 แถว</option>
+                <option value="500">แสดง 500 แถว</option>
+                <option value="1000">แสดง 1000 แถว</option>
+                <option value="5000">แสดง 5000 แถว</option>
+                <option value="10000">แสดง 10000 แถว</option>
+
+                
+            
+              </select>
+              <select class="form-control" id="pageByUser">
+                <option value="1">หน้าที่ 1</option>
+                
+              </select>
+              </div>
+
+
+              <table id="duplicateDataTable" class="table" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th style="text-align: center;">ชื่อ-นามสกุล</th>
+                        <th>เลขบัตรประชาชน</th>
+                        <th style="text-align: center;">บ้านเลขที่</th>
+                        <th>หมู่ที่</th>
+                        <th>ตำบล</th>
+                        <th>อำเภอ</th>
+                        <th>เบอร์โทรศัพท์</th>
+                        <th>ตัวแทน</th>
+                        <th>ตัวแทนเขต</th>
+                        <th style="text-align: center;">ตำแหน่ง<br>/ระดับ</th>
+                        <th style="text-align: center;">จัดการ</th>
+                    </tr>
+                </thead>
+                <tbody id='listDataDuplicateVoterArea'>
+                </tbody>
+                </table>
+
+
+
+
+
+
+             
+
+
+          </div>
+        </div>
+
+          </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+
+
+<!-- from user management-->
+<div class="modal fade" id="voterModal">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title">จัดการข้อมูลสมาชิก</h4>
+    </div>
+    <div class="modal-body">
+      
+      <!-- Content here.-->
+      <div class="box box-info">
+     
+      <!-- /.box-header -->
+      <!-- form start -->
+     <form  class="form-horizontal "> 
+        <div class="box-body">
+      
+<!--
+id
+first_name firstName
+last_name lastName
+id_card idCard
+no_address noAddressTxt
+group_address groupAddress
+sub_district  subDistrict
+district district
+tel tel
+-->
+          
+
+         
+
+          <div class="form-group">
+            <label for="firstNameTxt" class="col-sm-4 control-label">ชื่อ <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="firstNameTxt" placeholder="ชื่อ">
+            </div>
+          </div>
+           <div class="form-group">
+            <label for="lastNameTxt" class="col-sm-4 control-label">นามสกุล <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="lastNameTxt" placeholder="นามสกุล">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="idCardTxt" class="col-sm-4 control-label">เลขบัตรประชาชน <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="idCardTxt" placeholder="เลขบัตรประชาชน">
+            </div>
+          </div>
+
+          <div  class="form-group">
+            <label for="noAddressTxt" class="col-sm-4 control-label">บ้านเลขที่ <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="noAddressTxt" placeholder="บ้านเลขที่">
+            </div>
+          </div>
+
+          <div  class="form-group">
+            <label for="groupAddressTxt" class="col-sm-4 control-label">หมู่ที่ <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="groupAddressTxt" placeholder="หมู่ที่">
+            </div>
+          </div>
+
+          <div  class="form-group">
+            <label for="subDistrictTxt" class="col-sm-4 control-label">ตำบล <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="subDistrictTxt" placeholder="ตำบล">
+            </div>
+          </div>
+          <div  class="form-group">
+            <label for="districtTxt" class="col-sm-4 control-label">อำเภอ <span class="redFont">*</span></label>
+
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="districtTxt" placeholder="อำเภอ">
+            </div>
+          </div>
+          <div  class="form-group">
+            <label for="telTxt" class="col-sm-4 control-label">เบอร์โทรศัพท์</label>
+
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="telTxt" placeholder="เบอร์โทรศัพท์">
+            </div>
+          </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer" >
+           <span class="redFont">*</span> จำเป็นต้องกรอก
+          <button type="button" class="btn btn-default pull-right" data-dismiss="modal" aria-label="Close" style="margin-left: 5px;">ยกเลิก</button>
+          <!-- <button type="reset" class="btn btn-default">ยกเลิก</button> -->
+          <input type="hidden" name="actionVoter" id="actionVoter" value="add">
+          <input type="hidden" name="idVoter" id="idVoter" value="">
+          <button id='btnSubmit' type="button" class="btn btn-info pull-right" >บันทึก</button>
+        </div>
+        <!-- /.box-footer -->
+      </form>
+    </div>
+      <!-- Content here.-->
+
+    </div>
+ 
+  </div>
+  <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- from user management-->
+
+<script type="text/javascript" src="./Controller/cVoteFast.js"></script>
+
+
+
+
+
