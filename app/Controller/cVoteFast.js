@@ -261,16 +261,16 @@ var listVoterDataFn = function(data){
 	});
 	/* comment here for disable line.*/
 	$("#listDataVoterArea").html(html);
-	
+/*
 	var table=$('#userDataTable').DataTable({
 		paging: false,
-		//"pageLength": 50,
-		retrieve: true
+		"pageLength": 50,
+		retrieve: true,
+		searching: false
 		
 	});
 	$("#userDataTable_info").remove();
-	
-	
+	*/
 	
 
 
@@ -307,7 +307,7 @@ var listVoterDataFn = function(data){
 	
 }
 
-var getVoterDataFn = function(rpp,page){
+var getVoterDataFn = function(rpp,page,searchData=""){
 	
 	
 	$.ajax({
@@ -315,6 +315,7 @@ var getVoterDataFn = function(rpp,page){
 		type:"get",
 		data:{"role":sessionStorage.getItem('galbalRole'),
 		"id":sessionStorage.getItem('galbalEmpId'),
+		"searchData":searchData,
 		"page":page,
 		"rpp":rpp
 	},
@@ -448,6 +449,12 @@ var checkDuplicateIdCardFn = function(){
 $(document).ready(function(){
 	
 	
+
+	$("#searchData").keyup(function(){
+		console.log($(this).val());
+		getVoterDataFn(rpp=$("#rppByUser").val(),page=$("#pageByUser").val(),$(this).val());
+	});
+
 	$("#rppByUser").change(function(){
 		
 		sessionStorage.setItem('rpp',$(this).val());

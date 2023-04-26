@@ -29,21 +29,29 @@ class VoterController extends Controller
 	{		
 		
 		if ($request->role == 0) {
-			$items = DB::select("
+			$sql="
 			SELECT v.id,v.first_name,v.last_name,v.id_card,v.no_address,
-			v.group_address,v.sub_district,v.district,tel,v.profile_id,p.other,p.profile_id  as profile_super_id,
+			v.group_address,v.sub_district,v.district,v.tel,v.profile_id,p.other,p.profile_id  as profile_super_id,
 			p.first_name as profile_first_name,p.last_name as profile_last_name,p.role as role,demarcate_id as demarcate_super_id
 			,(select demarcate from profile where profile_id=demarcate_super_id   ) as demarcate
             ,(select demarcate from profile where profile_id=profile_super_id   ) as demarcate_super
 			FROM voter v
 			inner join profile p on v.profile_id=p.profile_id
-			-- where p.role!=0 and p.role!=99
+			where v.first_name like ? 
+			or v.last_name like ?
+			or v.id_card like ?
+		
+		
+		
+
 			order by p.role,v.first_name,v.last_name
 			
 			
-			"
-			//,array('%'.$request->Voter_id.'%')
-			);
+			";
+			$items = DB::select($sql,array('%'.$request->searchData.'%',
+			'%'.$request->searchData.'%','%'.$request->searchData.'%'
+		));
+
 		}else if($request->role == 99){
 			$items = DB::select("
 			SELECT v.id,v.first_name,v.last_name,v.id_card,v.no_address,
