@@ -589,7 +589,7 @@ app.controller("pageController",function($scope, $route, $routeParams){
 				$(".page_top").html('<i class="fa fa-users"></i> จัดการข้อมูลสมาชิก');
 			}else if($routeParams.url=="voter-fast"){
 				$("#voter_fast_main_menu").parent().addClass('active');
-				$(".page_top").html('<i class="fa fa-users"></i> จัดการข้อมูลสมาชิก(เร็ว)');
+				$(".page_top").html('<i class="fa fa-users"></i> จัดการข้อมูลสมาชิก');
 			}
 
 
