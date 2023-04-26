@@ -284,7 +284,7 @@ var getVoterDataFn = function(){
 		async:false,
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
 		success:function(data){
-			listVoterDataFn(data);
+			listVoterDataFn(data['data']);
 		}
 	});
 	

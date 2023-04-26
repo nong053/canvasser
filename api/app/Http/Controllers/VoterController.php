@@ -76,8 +76,23 @@ class VoterController extends Controller
 			,array($request->id)
 			);
 		}
+
+		// Get the current page from the url if it's not set default to 1
+		empty($request->page) ? $page = 1 : $page = $request->page;
+		
+		// Number of items per page
+		empty($request->rpp) ? $perPage = 10 : $perPage = $request->rpp;
+		
+		$offSet = ($page * $perPage) - $perPage; // Start displaying items from this number
+
+		// Get only the items you need using array_slice (only get 10 items since that's what you need)
+		$itemsForCurrentPage = array_slice($items, $offSet, $perPage, false);
+		
+		// Return the paginator with only 10 items but with the count of all items and set the it on the correct page
+		$result = new LengthAwarePaginator($itemsForCurrentPage, count($items), $perPage, $page);	
+
 	
-		return response()->json($items);
+		return response()->json($result);
 	}
 
 
