@@ -586,10 +586,10 @@ app.controller("pageController",function($scope, $route, $routeParams){
 				$(".page_top").html('<i class="fa fa-ship"></i> รอบเรือ');
 			}else if($routeParams.url=="voter"){
 				$("#voter_main_menu").parent().addClass('active');
-				$(".page_top").html('<i class="fa fa-users"></i> จัดการข้อมูลสมาชิก');
+				$(".page_top").html('<i class="fa fa-users"></i> จัดการข้อมูลสมาชิก(Old)');
 			}else if($routeParams.url=="voter-fast"){
 				$("#voter_fast_main_menu").parent().addClass('active');
-				$(".page_top").html('<i class="fa fa-users"></i> จัดการข้อมูลสมาชิก');
+				$(".page_top").html('<i class="fa fa-users"></i> จัดการข้อมูลสมาชิก(New)');
 			}
 
 

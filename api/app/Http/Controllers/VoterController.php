@@ -44,7 +44,8 @@ class VoterController extends Controller
 		
 		
 
-			order by p.role,v.first_name,v.last_name
+			-- order by p.role,v.first_name,v.last_name
+			order by v.updated_date desc
 			
 			
 			";
@@ -62,9 +63,13 @@ class VoterController extends Controller
 			FROM voter v
 			
 			inner join profile p on v.profile_id=p.profile_id
-		  where  p.demarcate_id=?  or p.profile_id=? -- and  (p.role!=0 or p.role!=99)
-			order by p.role,v.first_name,v.last_name
-			",array($request->id,$request->id));
+		  where  (p.demarcate_id=?  or p.profile_id=?) 
+		  and (v.first_name like ? 
+		  or v.last_name like ?
+		  or v.id_card like ?)
+			-- order by p.role,v.first_name,v.last_name
+			order by v.updated_date desc
+			",array($request->id,$request->id,'%'.$request->searchData.'%','%'.$request->searchData.'%','%'.$request->searchData.'%'));
 		} else {
 
 			
@@ -79,12 +84,16 @@ class VoterController extends Controller
 			
 			inner join profile p on v.profile_id=p.profile_id
 			where v.profile_id=? 
-			order by p.role,v.first_name,v.last_name
+			and (v.first_name like ? 
+		  	or v.last_name like ?
+		  	or v.id_card like ?)
+			-- order by p.role,v.first_name,v.last_name
+			order by v.updated_date desc
 			"
-			,array($request->id)
+			,array($request->id,'%'.$request->searchData.'%','%'.$request->searchData.'%','%'.$request->searchData.'%')
 			);
 		}
-
+		if($request->voterType=='new'){
 		// Get the current page from the url if it's not set default to 1
 		empty($request->page) ? $page = 1 : $page = $request->page;
 		
@@ -100,7 +109,10 @@ class VoterController extends Controller
 		$result = new LengthAwarePaginator($itemsForCurrentPage, count($items), $perPage, $page);	
 
 	
-		return response()->json($result);
+			return response()->json($result);
+		}else{
+			return response()->json($items);
+		}
 	}
 
 
@@ -151,22 +163,25 @@ class VoterController extends Controller
 			);
 			}
 		
-		
-		// Get the current page from the url if it's not set default to 1
-		empty($request->page) ? $page = 1 : $page = $request->page;
+			if($request->voterType=='new'){
+			// Get the current page from the url if it's not set default to 1
+			empty($request->page) ? $page = 1 : $page = $request->page;
+				
+			// Number of items per page
+			empty($request->rpp) ? $perPage = 10 : $perPage = $request->rpp;
 			
-		// Number of items per page
-		empty($request->rpp) ? $perPage = 10 : $perPage = $request->rpp;
-		
-		$offSet = ($page * $perPage) - $perPage; // Start displaying items from this number
+			$offSet = ($page * $perPage) - $perPage; // Start displaying items from this number
 
-		// Get only the items you need using array_slice (only get 10 items since that's what you need)
-		$itemsForCurrentPage = array_slice($items, $offSet, $perPage, false);
-		
-		// Return the paginator with only 10 items but with the count of all items and set the it on the correct page
-		$result = new LengthAwarePaginator($itemsForCurrentPage, count($items), $perPage, $page);	
+			// Get only the items you need using array_slice (only get 10 items since that's what you need)
+			$itemsForCurrentPage = array_slice($items, $offSet, $perPage, false);
+			
+			// Return the paginator with only 10 items but with the count of all items and set the it on the correct page
+			$result = new LengthAwarePaginator($itemsForCurrentPage, count($items), $perPage, $page);	
 
-		return response()->json($result);
+				return response()->json($result);
+			}else{
+				return response()->json($items);
+			}
 	}
 
 	public function checkDupliCateIdCard(Request $request)
@@ -217,21 +232,25 @@ class VoterController extends Controller
 		
 		
 		}
-		// Get the current page from the url if it's not set default to 1
-		empty($request->page) ? $page = 1 : $page = $request->page;
+		if($request->voterType=='new'){
+			// Get the current page from the url if it's not set default to 1
+			empty($request->page) ? $page = 1 : $page = $request->page;
+				
+			// Number of items per page
+			empty($request->rpp) ? $perPage = 10 : $perPage = $request->rpp;
 			
-		// Number of items per page
-		empty($request->rpp) ? $perPage = 10 : $perPage = $request->rpp;
-		
-		$offSet = ($page * $perPage) - $perPage; // Start displaying items from this number
+			$offSet = ($page * $perPage) - $perPage; // Start displaying items from this number
 
-		// Get only the items you need using array_slice (only get 10 items since that's what you need)
-		$itemsForCurrentPage = array_slice($items, $offSet, $perPage, false);
-		
-		// Return the paginator with only 10 items but with the count of all items and set the it on the correct page
-		$result = new LengthAwarePaginator($itemsForCurrentPage, count($items), $perPage, $page);	
-		
-		return response()->json($result);
+			// Get only the items you need using array_slice (only get 10 items since that's what you need)
+			$itemsForCurrentPage = array_slice($items, $offSet, $perPage, false);
+			
+			// Return the paginator with only 10 items but with the count of all items and set the it on the correct page
+			$result = new LengthAwarePaginator($itemsForCurrentPage, count($items), $perPage, $page);	
+			
+			return response()->json($result);
+		}else{
+			return response()->json($items);
+		}
 	}
 
 

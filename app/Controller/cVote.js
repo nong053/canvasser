@@ -80,7 +80,8 @@ var delVoterFn = function(voterID){
 		success:function(data){
 			//console.log(data);
 			if(data.status==200){
-				getVoterDataFn();
+				//getVoterDataFn();
+				location.reload();
 			}
 			
 		},
@@ -234,7 +235,7 @@ var listVoterDataFn = function(data){
 
 	var table=$('#userDataTable').DataTable({
 		paging: true,
-		"pageLength": 50,
+		"pageLength": 10,
 		retrieve: true
 		
 	});
@@ -284,7 +285,7 @@ var getVoterDataFn = function(){
 		async:false,
 		headers:{Authorization:"Bearer "+sessionStorage.getItem('galbalToken')},
 		success:function(data){
-			listVoterDataFn(data['data']);
+			listVoterDataFn(data);
 		}
 	});
 	
@@ -320,7 +321,8 @@ var voterInsertFn = function(){
 			if(data.status==200){
 			
 					$("#voterModal").modal("hide");
-					getVoterDataFn();
+					//getVoterDataFn();
+					location.reload();
 
 			}
 		}
@@ -356,7 +358,8 @@ var voterUpdateFn = function(){
 			//console.log(data);
 			if(data.status==200){
 				$("#voterModal").modal("hide");
-				getVoterDataFn();
+				//getVoterDataFn();
+				location.reload();
 			}
 		}
 	});

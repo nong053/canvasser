@@ -44,7 +44,7 @@ $(document).ready(function(){
 						if(data.role==0){
 							window.location = "./app/#/pages/superuser-management";
 						}else{
-							window.location = "./app/#/pages/voter";
+							window.location = "./app/#/pages/voter-fast";
 						}
 
 						

@@ -317,7 +317,9 @@ var getVoterDataFn = function(rpp,page,searchData=""){
 		"id":sessionStorage.getItem('galbalEmpId'),
 		"searchData":searchData,
 		"page":page,
-		"rpp":rpp
+		"rpp":rpp,
+		"voterType":"new"
+
 	},
 		dataType:"json",
 		async:false,
@@ -411,7 +413,8 @@ var checkDuplicateNameFn = function(){
 		type:"get",
 		data:{"role":sessionStorage.getItem('galbalRole'),"id":sessionStorage.getItem('galbalEmpId'),
 		rpp:$("#rppByUser").val(),
-		page:$("#pageByUser").val()
+		page:$("#pageByUser").val(),
+		"voterType":"new"
 	},
 		dataType:"json",
 		async:false,
@@ -431,8 +434,8 @@ var checkDuplicateIdCardFn = function(){
 		data:{"role":sessionStorage.getItem('galbalRole'),
 		"id":sessionStorage.getItem('galbalEmpId'),
 		rpp:$("#rppByUser").val(),
-		page:$("#pageByUser").val()
-		
+		page:$("#pageByUser").val(),
+		"voterType":"new"
 
 	},
 		dataType:"json",
